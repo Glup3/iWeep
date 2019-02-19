@@ -23,7 +23,7 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   int _currentIndex = 0;
   final List<Widget> _children = [
-    Container(color: Colors.blue,),
+    Container(color: Colors.cyan,),
     Container(color: Colors.red,),
     Container(color: Colors.green,),
   ];
@@ -33,6 +33,14 @@ class _MyHomePageState extends State<MyHomePage> {
     return Scaffold(
       bottomNavigationBar: _buildBottomNavigationBar(),
       body: _children[_currentIndex],
+      floatingActionButton: _buildFloatingActionButton(),
+    );
+  }
+
+  Widget _buildFloatingActionButton() {
+    return FloatingActionButton(
+      child: Icon(Icons.add),
+      onPressed: () {},
     );
   }
 
