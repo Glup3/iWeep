@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import './screens/settings_screen.dart';
 
 void main() => runApp(MyApp());
 
@@ -25,15 +26,22 @@ class _MyHomePageState extends State<MyHomePage> {
   final List<Widget> _children = [
     Container(color: Colors.cyan,),
     Container(color: Colors.red,),
-    Container(color: Colors.green,),
+    Container(color: Colors.white, child: SettingsScreen(),),
   ];
+  FloatingActionButton _fab;
+
+  @override
+  void initState() {
+    _fab =_buildFloatingActionButton();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       bottomNavigationBar: _buildBottomNavigationBar(),
       body: _children[_currentIndex],
-      floatingActionButton: _buildFloatingActionButton(),
+      floatingActionButton: _fab,
     );
   }
 
@@ -69,5 +77,11 @@ class _MyHomePageState extends State<MyHomePage> {
     setState(() {
       _currentIndex = index;
     });
+    if (index == 0) {
+      _fab = _buildFloatingActionButton();
+    }
+    else {
+      _fab = null;
+    }
   }
 }
