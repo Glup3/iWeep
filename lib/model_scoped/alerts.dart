@@ -1,5 +1,5 @@
 import 'package:scoped_model/scoped_model.dart';
-
+import 'package:flutter/material.dart';
 import 'package:iweep/model/alert.dart';
 
 class AlertsModel extends Model {
@@ -18,6 +18,15 @@ class AlertsModel extends Model {
     ]);
 
   int _selectedAlertIndex;
+  ThemeData _themeData;
+
+  ThemeData get themeData{
+    return _themeData;
+  }
+  
+  void changeThemeData(ThemeData theme) {
+    _themeData = theme;
+  }
 
   List<Alert> get alerts {
     return List.from(_alerts.alert);

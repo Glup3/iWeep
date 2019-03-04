@@ -1,5 +1,6 @@
 import 'dart:isolate';
 import 'package:flutter/rendering.dart';
+import 'package:dynamic_theme/dynamic_theme.dart';
 import 'package:scoped_model/scoped_model.dart';
 import 'package:android_alarm_manager/android_alarm_manager.dart';
 
@@ -26,21 +27,34 @@ void printHello() {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return ScopedModel<AlertsModel>(
+   return DynamicTheme(
+     defaultBrightness: Brightness.light,
+     data: (Brightness brightness) => _buildTheme(brightness),
+     themedWidgetBuilder: (BuildContext context, ThemeData theme) => ScopedModel<AlertsModel>(
       model: AlertsModel(),
       child: MaterialApp(
         title: 'iWeep',
-        theme: ThemeData(
-          primarySwatch: Colors.blue,
-          accentColor: Colors.purple,
-          primaryColor: Colors.blue,
-          primaryColorDark: Colors.blue[700],
-          primaryColorLight: Colors.blue[200],
-          canvasColor: Colors.white,
-        ),
+        theme: theme,
         home: MyHomePage(),
       ),
-    );
+    ),
+   );
+  }
+
+  ThemeData _buildTheme(Brightness brightness) {
+    return brightness == Brightness.dark
+        ? ThemeData.dark().copyWith(
+            textTheme: ThemeData.dark().textTheme.apply(
+                  bodyColor: Colors.white,
+                  displayColor: Colors.white,
+                ),
+            backgroundColor: Colors.black)
+        : ThemeData.light().copyWith(
+            textTheme: ThemeData.light().textTheme.apply(
+                  bodyColor: Colors.black,
+                  displayColor: Colors.black,
+                ),
+            backgroundColor: Colors.white);
   }
 }
 
