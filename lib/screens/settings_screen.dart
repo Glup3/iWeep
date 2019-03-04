@@ -48,7 +48,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
       ),
     );
   }
-  
 
   Widget _buildTileHeader(String title) {
     return ListTile(
