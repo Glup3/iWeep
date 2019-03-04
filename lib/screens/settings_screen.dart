@@ -12,39 +12,43 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return ListView(
-      children: <Widget>[
-        _buildTileHeader('Einstellungen'),
-        ListTileBorder(
-          child: CheckboxListTile(
-            title: Text('Stupid'),
-            value: _value1,
-            activeColor: Colors.purple,
-            onChanged: (value) {
-              setState(() {
-                _value1 = value;
-              });
-            },
+    return Container(
+      color: Theme.of(context).canvasColor,
+      child: ListView(
+        children: <Widget>[
+          _buildTileHeader('Einstellungen'),
+          ListTileBorder(
+            child: CheckboxListTile(
+              title: Text('Stupid'),
+              value: _value1,
+              activeColor: Colors.purple,
+              onChanged: (value) {
+                setState(() {
+                  _value1 = value;
+                });
+              },
+            ),
           ),
-        ),
-        ListTileBorder(
-          child: SwitchListTile(
-            title: Text('Ehrenmann'),
-            subtitle: Text('Nur für Ehrenmänner'),
-            value: _value2,
-            activeColor: Colors.purple,
-            onChanged: (value) {
-              setState(() {
-                _value2 = value;
-              });
-            },
+          ListTileBorder(
+            child: SwitchListTile(
+              title: Text('Ehrenmann'),
+              subtitle: Text('Nur für Ehrenmänner'),
+              value: _value2,
+              activeColor: Colors.purple,
+              onChanged: (value) {
+                setState(() {
+                  _value2 = value;
+                });
+              },
+            ),
           ),
-        ),
-        _buildTileLanguage(),
-        _buildTileAbout(),
-      ],
+          _buildTileLanguage(),
+          _buildTileAbout(),
+        ],
+      ),
     );
   }
+  
 
   Widget _buildTileHeader(String title) {
     return ListTile(
