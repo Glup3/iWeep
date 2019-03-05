@@ -2,21 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:dynamic_theme/dynamic_theme.dart';
 import 'package:iweep/widgets/list_tile_border.dart';
 import 'package:iweep/data/my_themes.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:iweep/localization/app_translation_delegate.dart';
 
 class SettingsScreen extends StatefulWidget {
   @override
   _SettingsScreenState createState() => _SettingsScreenState();
 }
 
-enum ThemeAnswers {
-  THEME1,
-  THEME2,
-  THEME3,
-  THEME4,
-  THEME5,
-  THEME6,
-  THEME7,
-}
+enum ThemeAnswers { THEME1, THEME2, THEME3, THEME4, THEME5, THEME6, THEME7 }
 
 enum LanguageAnswers { German, English, Japanese }
 

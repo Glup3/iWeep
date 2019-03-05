@@ -9,6 +9,9 @@ import 'package:iweep/model_scoped/alerts.dart';
 import 'package:iweep/screens/add_alert_screen.dart';
 import 'package:iweep/screens/settings_screen.dart';
 import 'package:iweep/screens/alarm_list_screen.dart';
+import 'package:iweep/localization/app_translation_delegate.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:iweep/localization/application.dart';
 
 main() async {
   final int helloAlarmID = 0;
@@ -24,21 +27,32 @@ void printHello() {
   print("[$now] Hello, world! isolate=$isolateId");
 }
 
+
+
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-   return DynamicTheme(
-     defaultBrightness: Brightness.light,
-     data: (Brightness brightness) => _buildTheme(brightness),
-     themedWidgetBuilder: (BuildContext context, ThemeData theme) => ScopedModel<AlertsModel>(
-      model: AlertsModel(),
-      child: MaterialApp(
-        title: 'iWeep',
-        theme: theme,
-        home: MyHomePage(),
-      ),
-    ),
-   );
+    return DynamicTheme(
+      defaultBrightness: Brightness.light,
+      data: (Brightness brightness) => _buildTheme(brightness),
+      themedWidgetBuilder: (BuildContext context, ThemeData theme) =>
+          ScopedModel<AlertsModel>(
+            model: AlertsModel(),
+            child: MaterialApp(
+              title: 'iWeep',
+              theme: theme,
+              home: MyHomePage(),
+              localizationsDelegates: [
+                const AppTranslationsDelegate(),
+                //provides localised strings
+                GlobalMaterialLocalizations.delegate,
+                //provides RTL support
+                GlobalWidgetsLocalizations.delegate,
+              ],
+               supportedLocales: application.supportedLocales(),
+            ),
+          ),
+    );
   }
 
   ThemeData _buildTheme(Brightness brightness) {
