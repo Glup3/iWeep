@@ -18,6 +18,8 @@ enum ThemeAnswers {
   THEME7,
 }
 
+enum LanguageAnswers { German, English, Japanese }
+
 class _SettingsScreenState extends State<SettingsScreen> {
   bool _value1 = false;
   bool _value2 = false;
@@ -56,9 +58,10 @@ class _SettingsScreenState extends State<SettingsScreen> {
           ),
           ListTileBorder(
             child: ListTile(
-                title: Text('Change Theme'),
-                onTap: _askedToLead,
-          ),),
+              title: Text('Change Theme'),
+              onTap: _askedToLead,
+            ),
+          ),
           _buildTileLanguage(),
           _buildTileAbout(),
         ],
@@ -66,85 +69,83 @@ class _SettingsScreenState extends State<SettingsScreen> {
     );
   }
 
-Future<void> _askedToLead() async {
-                    switch (await showDialog<ThemeAnswers>(
-                        context: context,
-                        builder: (BuildContext context) {
-                          return SimpleDialog(
-                            title: const Text('Select Theme'),
-                            children: <Widget>[
-                              SimpleDialogOption(
-                                onPressed: () {
-                                  Navigator.pop(context, ThemeAnswers.THEME1);
-                                },
-                                child: const Text('Theme 1'),
-                              ),
-                              SimpleDialogOption(
-                                onPressed: () {
-                                  Navigator.pop(context, ThemeAnswers.THEME2);
-                                },
-                                child: const Text('Theme 2'),
-                              ),
-                              SimpleDialogOption(
-                                onPressed: () {
-                                  Navigator.pop(context, ThemeAnswers.THEME3);
-                                },
-                                child: const Text('Theme 3'),
-                              ),
-                              SimpleDialogOption(
-                                onPressed: () {
-                                  Navigator.pop(context, ThemeAnswers.THEME4);
-                                },
-                                child: const Text('Theme 4'),
-                              ),
-                              SimpleDialogOption(
-                                onPressed: () {
-                                  Navigator.pop(context, ThemeAnswers.THEME5);
-                                },
-                                child: const Text('Theme 5'),
-                              ),
-                              SimpleDialogOption(
-                                onPressed: () {
-                                  Navigator.pop(context, ThemeAnswers.THEME6);
-                                },
-                                child: const Text('Theme 6'),
-                              ),
-                              SimpleDialogOption(
-                                onPressed: () {
-                                  Navigator.pop(context, ThemeAnswers.THEME7);
-                                },
-                                child: const Text('Theme 7'),
-                              ),
-                            ],
-                          );
-                        })) {
-                      case ThemeAnswers.THEME1:
-                        DynamicTheme.of(context).setThemeData(new ThemeData(
-        primaryColor: Theme.of(context).primaryColor == Colors.indigo? Colors.red: Colors.indigo));
-                        break;
-                        case ThemeAnswers.THEME2:
-                        DynamicTheme.of(context).setThemeData(MyThemes.theme2);
-                        break;
-                        case ThemeAnswers.THEME3:
-                        DynamicTheme.of(context).setThemeData(MyThemes.theme3);
-                        break;
-                        case ThemeAnswers.THEME4:
-                        DynamicTheme.of(context).setThemeData(MyThemes.theme4);
-                        break;
-                        case ThemeAnswers.THEME5:
-                        DynamicTheme.of(context).setThemeData(MyThemes.theme5);
-                        break;
-                        case ThemeAnswers.THEME6:
-                        DynamicTheme.of(context).setThemeData(MyThemes.theme6);
-                        break;
-                        case ThemeAnswers.THEME7:
-                        DynamicTheme.of(context).setThemeData(MyThemes.theme7);
-                        break;
-                      default:
-                        DynamicTheme.of(context).setThemeData(MyThemes.theme1);
-                        break;
-                    }
-                  }
+  Future<void> _askedToLead() async {
+    switch (await showDialog<ThemeAnswers>(
+        context: context,
+        builder: (BuildContext context) {
+          return SimpleDialog(
+            title: const Text('Select Theme'),
+            children: <Widget>[
+              SimpleDialogOption(
+                onPressed: () {
+                  Navigator.pop(context, ThemeAnswers.THEME1);
+                },
+                child: const Text('Theme 1'),
+              ),
+              SimpleDialogOption(
+                onPressed: () {
+                  Navigator.pop(context, ThemeAnswers.THEME2);
+                },
+                child: const Text('Theme 2'),
+              ),
+              SimpleDialogOption(
+                onPressed: () {
+                  Navigator.pop(context, ThemeAnswers.THEME3);
+                },
+                child: const Text('Theme 3'),
+              ),
+              SimpleDialogOption(
+                onPressed: () {
+                  Navigator.pop(context, ThemeAnswers.THEME4);
+                },
+                child: const Text('Theme 4'),
+              ),
+              SimpleDialogOption(
+                onPressed: () {
+                  Navigator.pop(context, ThemeAnswers.THEME5);
+                },
+                child: const Text('Theme 5'),
+              ),
+              SimpleDialogOption(
+                onPressed: () {
+                  Navigator.pop(context, ThemeAnswers.THEME6);
+                },
+                child: const Text('Theme 6'),
+              ),
+              SimpleDialogOption(
+                onPressed: () {
+                  Navigator.pop(context, ThemeAnswers.THEME7);
+                },
+                child: const Text('Theme 7'),
+              ),
+            ],
+          );
+        })) {
+      case ThemeAnswers.THEME1:
+        DynamicTheme.of(context).setThemeData(MyThemes.theme1);
+        break;
+      case ThemeAnswers.THEME2:
+        DynamicTheme.of(context).setThemeData(MyThemes.theme2);
+        break;
+      case ThemeAnswers.THEME3:
+        DynamicTheme.of(context).setThemeData(MyThemes.theme3);
+        break;
+      case ThemeAnswers.THEME4:
+        DynamicTheme.of(context).setThemeData(MyThemes.theme4);
+        break;
+      case ThemeAnswers.THEME5:
+        DynamicTheme.of(context).setThemeData(MyThemes.theme5);
+        break;
+      case ThemeAnswers.THEME6:
+        DynamicTheme.of(context).setThemeData(MyThemes.theme6);
+        break;
+      case ThemeAnswers.THEME7:
+        DynamicTheme.of(context).setThemeData(MyThemes.theme7);
+        break;
+      default:
+        break;
+    }
+  }
 
   Widget _buildTileHeader(String title) {
     return ListTile(
@@ -159,8 +160,48 @@ Future<void> _askedToLead() async {
           BoxDecoration(border: Border(bottom: BorderSide(color: Colors.grey))),
       child: ListTile(
         title: Text('Sprache'),
+        onTap: _language,
       ),
     );
+  }
+
+  Future<void> _language() async {
+    switch (await showDialog<LanguageAnswers>(
+        context: context,
+        builder: (BuildContext context) {
+          return SimpleDialog(
+            title: const Text('Select Language'),
+            children: <Widget>[
+              SimpleDialogOption(
+                onPressed: () {
+                  Navigator.pop(context, LanguageAnswers.German);
+                },
+                child: const Text('Deutsch'),
+              ),
+              SimpleDialogOption(
+                onPressed: () {
+                  Navigator.pop(context, LanguageAnswers.English);
+                },
+                child: const Text('English'),
+              ),
+              SimpleDialogOption(
+                onPressed: () {
+                  Navigator.pop(context, LanguageAnswers.Japanese);
+                },
+                child: const Text('Japanisch'),
+              ),
+            ],
+          );
+        })) {
+      case LanguageAnswers.German:
+        break;
+      case LanguageAnswers.English:
+        break;
+      case LanguageAnswers.Japanese:
+        break;
+      default:
+        break;
+    }
   }
 
   Widget _buildTileAbout() {
