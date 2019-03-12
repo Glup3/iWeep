@@ -157,14 +157,6 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   void onTabTapped(int index) {
-    bool value;
-
-    if (index == 0) {
-      value = false;
-    } else {
-      value = true;
-    }
-
     setState(() {
       _currentIndex = index;
       _isHidden = index == 0 ? false : true;
