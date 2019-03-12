@@ -9,11 +9,14 @@ import 'package:iweep/model_scoped/alerts.dart';
 import 'package:iweep/screens/alert_screen.dart';
 import 'package:iweep/screens/settings_screen.dart';
 import 'package:iweep/screens/alarm_list_screen.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:iweep/localization/GlobalTranslations.dart';
 import 'package:iweep/screens/statistic_screen.dart';
 
 main() async {
   final int helloAlarmID = 0;
   await AndroidAlarmManager.initialize();
+  await allTranslations.init();
   runApp(MyApp());
   await AndroidAlarmManager.periodic(
       const Duration(milliseconds: 500), helloAlarmID, printHello);
@@ -28,18 +31,25 @@ void printHello() {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-   return DynamicTheme(
-     defaultBrightness: Brightness.light,
-     data: (Brightness brightness) => _buildTheme(brightness),
-     themedWidgetBuilder: (BuildContext context, ThemeData theme) => ScopedModel<AlertsModel>(
-      model: AlertsModel(),
-      child: MaterialApp(
-        title: 'iWeep',
-        theme: theme,
-        home: MyHomePage(),
-      ),
-    ),
-   );
+    return DynamicTheme(
+      defaultBrightness: Brightness.light,
+      data: (Brightness brightness) => _buildTheme(brightness),
+      themedWidgetBuilder: (BuildContext context, ThemeData theme) =>
+          ScopedModel<AlertsModel>(
+            model: AlertsModel(),
+            child: MaterialApp(
+              title: 'iWeep',
+              theme: theme,
+              home: MyHomePage(),
+              localizationsDelegates: [
+                GlobalMaterialLocalizations.delegate,
+                GlobalWidgetsLocalizations.delegate,
+              ],
+              // Tells the system which are the supported languages
+              supportedLocales: allTranslations.supportedLocales(),
+            ),
+          ),
+    );
   }
 
   ThemeData _buildTheme(Brightness brightness) {
@@ -72,6 +82,8 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   void initState() {
+    allTranslations.onLocaleChangedCallback = _onLocaleChanged;
+    _scrollController = ScrollController();
     _scrollController.addListener(scrollListener);
     _children.addAll([
       AlarmListScreen(scrollController: _scrollController),
@@ -126,18 +138,18 @@ class _MyHomePageState extends State<MyHomePage> {
       items: [
         BottomNavigationBarItem(
           icon: Icon(Icons.access_alarm),
-          title: Text('Wecker'),
-          backgroundColor: Theme.of(context).primaryColor,
+          title: Text(allTranslations.text('tab_alarm')),
+          backgroundColor: Colors.blue,
         ),
         BottomNavigationBarItem(
           icon: Icon(Icons.show_chart),
-          title: Text('Statistik'),
-          backgroundColor: Theme.of(context).primaryColor,
+          title: Text(allTranslations.text('tab_graph')),
+          backgroundColor: Colors.red,
         ),
         BottomNavigationBarItem(
           icon: Icon(Icons.settings),
-          title: Text('Einstellungen'),
-          backgroundColor: Theme.of(context).primaryColor,
+          title: Text(allTranslations.text('tab_settings')),
+          backgroundColor: Colors.green,
         ),
       ],
       type: BottomNavigationBarType.shifting,
@@ -149,5 +161,10 @@ class _MyHomePageState extends State<MyHomePage> {
       _currentIndex = index;
       _isHidden = index == 0 ? false : true;
     });
+  }
+
+  _onLocaleChanged() async {
+    // do anything you need to do if the language changes
+    print('Language has been changed to: ${allTranslations.currentLanguage}');
   }
 }
