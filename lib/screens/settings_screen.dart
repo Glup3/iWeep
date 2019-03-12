@@ -2,8 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:dynamic_theme/dynamic_theme.dart';
 import 'package:iweep/widgets/list_tile_border.dart';
 import 'package:iweep/data/my_themes.dart';
-import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:iweep/localization/app_translation_delegate.dart';
+import 'package:iweep/localization/GlobalTranslations.dart';
 
 class SettingsScreen extends StatefulWidget {
   @override
@@ -17,6 +16,7 @@ enum LanguageAnswers { German, English, Japanese }
 class _SettingsScreenState extends State<SettingsScreen> {
   bool _value1 = false;
   bool _value2 = false;
+  final String language = allTranslations.currentLanguage;
 
   @override
   Widget build(BuildContext context) {
@@ -24,10 +24,12 @@ class _SettingsScreenState extends State<SettingsScreen> {
       color: Theme.of(context).canvasColor,
       child: ListView(
         children: <Widget>[
-          _buildTileHeader('Einstellungen'),
+          _buildTileHeader(allTranslations.text('tab_settings')),
           ListTileBorder(
             child: CheckboxListTile(
-              title: Text('Stupid'),
+              title: Text(
+                allTranslations.text("tab_bag"),
+              ),
               value: _value1,
               activeColor: Colors.purple,
               onChanged: (value) {
@@ -52,7 +54,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
           ),
           ListTileBorder(
             child: ListTile(
-              title: Text('Change Theme'),
+              title: Text(allTranslations.text('title_change_theme')),
               onTap: _askedToLead,
             ),
           ),
@@ -68,7 +70,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
         context: context,
         builder: (BuildContext context) {
           return SimpleDialog(
-            title: const Text('Select Theme'),
+            title: Text(allTranslations.text('title_select_theme')),
             children: <Widget>[
               SimpleDialogOption(
                 onPressed: () {
@@ -153,7 +155,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
       decoration:
           BoxDecoration(border: Border(bottom: BorderSide(color: Colors.grey))),
       child: ListTile(
-        title: Text('Sprache'),
+        title: Text(allTranslations.text('title_change_language'),),
         onTap: _language,
       ),
     );
@@ -164,7 +166,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
         context: context,
         builder: (BuildContext context) {
           return SimpleDialog(
-            title: const Text('Select Language'),
+            title: Text(allTranslations.text('title_select_language')),
             children: <Widget>[
               SimpleDialogOption(
                 onPressed: () {
@@ -188,10 +190,16 @@ class _SettingsScreenState extends State<SettingsScreen> {
           );
         })) {
       case LanguageAnswers.German:
+        await allTranslations.setNewLanguage(language != 'ger' ? 'ger' : 'ger');
+        setState(() {});
         break;
       case LanguageAnswers.English:
+        await allTranslations.setNewLanguage(language != 'en' ? 'en' : 'en');
+        setState(() {});
         break;
       case LanguageAnswers.Japanese:
+        await allTranslations.setNewLanguage(language != 'jap' ? 'jap' : 'jap');
+        setState(() {});
         break;
       default:
         break;
@@ -200,7 +208,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
   Widget _buildTileAbout() {
     return ListTile(
-      title: Text('Über'),
+      title: Text(allTranslations.text('tab_about')),
     );
   }
 }

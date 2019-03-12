@@ -1,8 +1,13 @@
 {
     "tab_home": "Haus",
-    "tab_categories": "Kategorien",
-    "tab_profile": "Profil",
-    "tab_notifications": "Benachrichtigung",
     "tab_bag": "Tasche",
-    "title_select_language": "Sprache auswählen"
+    "title_select_language": "Sprache auswählen",
+    "title_change_language": "Sprache ändern",
+    "title_select_theme": "Farben auswählen",
+    "title_change_theme": "Farben ändern",
+    "tab_categories": "Kategorien",
+    "tab_alarm": "Wecker",
+    "tab_graph": "Statistik",
+    "tab_settings": "Einstellungen",
+    "tab_about": "Über"
   }

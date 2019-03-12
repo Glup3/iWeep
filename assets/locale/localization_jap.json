@@ -1,8 +1,12 @@
 {
     "tab_home": "たけい",
-    "tab_categories": "かこう",
-    "tab_profile": "たいどこの",
-    "tab_notifications": "うるい",
     "tab_bag": "かばん",
-    "title_select_language": "Select Language"
+    "title_select_language": "選択にほん",
+    "title_change_language": "言語を変更する",
+    "title_select_theme": "色を選ぶ",
+    "title_change_theme": "色を変える",
+    "tab_alarm": "目覚まし時計",
+    "tab_graph": "統計",
+    "tab_settings": "設定",
+    "tab_about": "情報"
   }

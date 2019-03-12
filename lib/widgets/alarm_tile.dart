@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../model/alert.dart';
 import '../util/formatting_helper.dart';
+import 'package:iweep/localization/GlobalTranslations.dart';
 
 class AlarmTile extends StatefulWidget {
 

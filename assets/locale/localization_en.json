@@ -1,8 +1,13 @@
 {
     "tab_home": "Home",
-    "tab_categories": "Categories",
-    "tab_profile": "Profile",
-    "tab_notifications": "Notifications",
     "tab_bag": "Bag",
-    "title_select_language": "Select Language"
+    "title_select_language": "Select Language",
+    "title_change_language": "Change Language",
+    "title_select_theme": "Select Theme",
+    "title_change_theme": "Change Theme",
+    "tab_alarm": "Alarm",
+    "tab_graph": "Graph",
+    "tab_settings": "Settings",
+    "tab_about": "About"
+
   }

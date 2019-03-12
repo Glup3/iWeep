@@ -9,13 +9,14 @@ import 'package:iweep/model_scoped/alerts.dart';
 import 'package:iweep/screens/add_alert_screen.dart';
 import 'package:iweep/screens/settings_screen.dart';
 import 'package:iweep/screens/alarm_list_screen.dart';
-import 'package:iweep/localization/app_translation_delegate.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:iweep/localization/application.dart';
+import 'package:iweep/localization/GlobalTranslations.dart';
+
 
 main() async {
   final int helloAlarmID = 0;
   await AndroidAlarmManager.initialize();
+  await allTranslations.init();
   runApp(MyApp());
   await AndroidAlarmManager.periodic(
       const Duration(milliseconds: 500), helloAlarmID, printHello);
@@ -43,13 +44,11 @@ class MyApp extends StatelessWidget {
               theme: theme,
               home: MyHomePage(),
               localizationsDelegates: [
-                const AppTranslationsDelegate(),
-                //provides localised strings
                 GlobalMaterialLocalizations.delegate,
-                //provides RTL support
                 GlobalWidgetsLocalizations.delegate,
-              ],
-               supportedLocales: application.supportedLocales(),
+            ],
+            // Tells the system which are the supported languages
+            supportedLocales: allTranslations.supportedLocales(),
             ),
           ),
     );
@@ -86,6 +85,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   void initState() {
+     allTranslations.onLocaleChangedCallback = _onLocaleChanged;
     _scrollController = ScrollController();
     _scrollController.addListener(scrollListener);
     _children.addAll([
@@ -151,17 +151,17 @@ class _MyHomePageState extends State<MyHomePage> {
       items: [
         BottomNavigationBarItem(
           icon: Icon(Icons.access_alarm),
-          title: Text('Wecker'),
+          title: Text(allTranslations.text('tab_alarm')),
           backgroundColor: Colors.blue,
         ),
         BottomNavigationBarItem(
           icon: Icon(Icons.show_chart),
-          title: Text('Statistik'),
+          title: Text(allTranslations.text('tab_graph')),
           backgroundColor: Colors.red,
         ),
         BottomNavigationBarItem(
           icon: Icon(Icons.settings),
-          title: Text('Einstellungen'),
+          title: Text(allTranslations.text('tab_settings')),
           backgroundColor: Colors.green,
         ),
       ],
@@ -183,4 +183,9 @@ class _MyHomePageState extends State<MyHomePage> {
       _isHidden = value;
     });
   }
+
+  _onLocaleChanged() async {
+        // do anything you need to do if the language changes
+        print('Language has been changed to: ${allTranslations.currentLanguage}');
+    }
 }
