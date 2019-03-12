@@ -5,9 +5,10 @@ import 'package:android_alarm_manager/android_alarm_manager.dart';
 
 import 'package:flutter/material.dart';
 import 'package:iweep/model_scoped/alerts.dart';
-import 'package:iweep/screens/add_alert_screen.dart';
+import 'package:iweep/screens/alert_screen.dart';
 import 'package:iweep/screens/settings_screen.dart';
 import 'package:iweep/screens/alarm_list_screen.dart';
+import 'package:iweep/screens/statistic_screen.dart';
 
 main() async {
   final int helloAlarmID = 0;
@@ -34,9 +35,9 @@ class MyApp extends StatelessWidget {
           primarySwatch: Colors.blue,
           accentColor: Colors.purple,
           primaryColor: Colors.blue,
-          primaryColorDark: Colors.blue[700],
+          primaryColorDark: Colors.blue[500],
           primaryColorLight: Colors.blue[200],
-          canvasColor: Colors.white,
+          canvasColor: Colors.grey[100],
         ),
         home: MyHomePage(),
       ),
@@ -52,42 +53,25 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   int _currentIndex = 0;
   final List<Widget> _children = [];
-  bool _isHidden;
-  FloatingActionButton _fab;
-  ScrollController _scrollController;
+  bool _isHidden = false;
+  ScrollController _scrollController = ScrollController();
 
   @override
   void initState() {
-    _scrollController = ScrollController();
     _scrollController.addListener(scrollListener);
     _children.addAll([
-      Container(
-        color: Colors.blue[300],
-        child: AlarmListScreen(
-          scrollController: _scrollController,
-        ),
-      ),
-      Container(
-        color: Colors.red,
-      ),
+      AlarmListScreen(scrollController: _scrollController),
+      StatisticScreen(),
       SettingsScreen(),
     ]);
-    _isHidden = false;
-    _fab = _buildFloatingActionButton();
-
     super.initState();
   }
 
   void scrollListener() {
-    bool value;
-    if (_scrollController.position.userScrollDirection ==
-        ScrollDirection.forward) {
-      value = false;
-    } else {
-      value = true;
-    }
     setState(() {
-      _isHidden = value;
+      _isHidden = _scrollController.position.userScrollDirection == ScrollDirection.forward
+          ? false
+          : true;
     });
   }
 
@@ -102,16 +86,21 @@ class _MyHomePageState extends State<MyHomePage> {
     return Scaffold(
       bottomNavigationBar: _buildBottomNavigationBar(),
       body: _children[_currentIndex],
-      floatingActionButton: _isHidden ? null : _fab,
+      floatingActionButton: _isHidden ? null : _buildFloatingActionButton(),
     );
   }
 
   Widget _buildFloatingActionButton() {
-    return FloatingActionButton(
-      child: Icon(Icons.add),
-      onPressed: () {
-        Navigator.push(
-            context, MaterialPageRoute(builder: (context) => AddAlertScreen()));
+    return ScopedModelDescendant<AlertsModel>(
+      builder: (BuildContext context, Widget child, AlertsModel model) {
+        return FloatingActionButton(
+          child: Icon(Icons.add),
+          onPressed: () {
+            model.selectAlert(null);
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => AlertScreen()));
+          },
+        );
       },
     );
   }
@@ -124,17 +113,17 @@ class _MyHomePageState extends State<MyHomePage> {
         BottomNavigationBarItem(
           icon: Icon(Icons.access_alarm),
           title: Text('Wecker'),
-          backgroundColor: Colors.blue,
+          backgroundColor: Theme.of(context).primaryColor,
         ),
         BottomNavigationBarItem(
           icon: Icon(Icons.show_chart),
           title: Text('Statistik'),
-          backgroundColor: Colors.red,
+          backgroundColor: Theme.of(context).primaryColor,
         ),
         BottomNavigationBarItem(
           icon: Icon(Icons.settings),
           title: Text('Einstellungen'),
-          backgroundColor: Colors.green,
+          backgroundColor: Theme.of(context).primaryColor,
         ),
       ],
       type: BottomNavigationBarType.shifting,
@@ -152,7 +141,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
     setState(() {
       _currentIndex = index;
-      _isHidden = value;
+      _isHidden = index == 0 ? false : true;
     });
   }
 }
