@@ -92,7 +92,17 @@ class _AlertScreenState extends State<AlertScreen> {
       child: Column(
         children: <Widget>[
           _buildCardTimePicker(alert),
+          _buildCardDayPicker(),
         ],
+      ),
+    );
+  }
+
+  Widget _buildCardDayPicker() {
+    return Card(
+      child: ListTile(
+        leading: Text('Wiederholen'),
+        onTap: () {},
       ),
     );
   }
