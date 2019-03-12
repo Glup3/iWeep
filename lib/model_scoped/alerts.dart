@@ -1,5 +1,4 @@
 import 'package:scoped_model/scoped_model.dart';
-
 import 'package:iweep/model/alert.dart';
 
 class AlertsModel extends Model {
