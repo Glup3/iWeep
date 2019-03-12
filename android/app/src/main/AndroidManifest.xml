@@ -16,11 +16,7 @@
          FlutterApplication and put your custom class here. -->
     <application
         android:name="io.flutter.plugins.Application"
-<<<<<<< HEAD
         android:label="iWeep"
-=======
-        android:label="test_app"
->>>>>>> add alert screen
         android:icon="@mipmap/ic_launcher">
 
         <service
