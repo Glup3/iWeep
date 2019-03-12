@@ -13,12 +13,15 @@ class AlarmListScreen extends StatelessWidget {
   Widget build(BuildContext context) {
       return ScopedModelDescendant<AlertsModel>(
       builder: (BuildContext context, Widget child, AlertsModel model) {
-        return ListView.builder(
-          controller: scrollController,
-          itemCount: model.alerts.length,
-          itemBuilder: (BuildContext context, int index) {
-            return AlarmTile(alert: model.alerts[index]);
-          },
+        return Container(
+          color: Theme.of(context).canvasColor,
+          child: ListView.builder(
+            controller: scrollController,
+            itemCount: model.alerts.length,
+            itemBuilder: (BuildContext context, int index) {
+              return AlarmTile(alertIndex: index,);
+            },
+          ),
         );
       },
     );
