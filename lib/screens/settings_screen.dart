@@ -155,40 +155,36 @@ class _SettingsScreenState extends State<SettingsScreen> {
       decoration:
           BoxDecoration(border: Border(bottom: BorderSide(color: Colors.grey))),
       child: ListTile(
-        title: Text(allTranslations.text('title_change_language'),),
+        title: Text(
+          allTranslations.text('title_change_language'),
+        ),
         onTap: _language,
       ),
     );
   }
 
+  Widget _buildDialogAnswer(String text, LanguageAnswers enumAnswer) {
+    return SimpleDialogOption(
+      onPressed: () => Navigator.pop(context, enumAnswer),
+      child: Text(text),
+    );
+  }
+
   Future<void> _language() async {
-    switch (await showDialog<LanguageAnswers>(
+    LanguageAnswers languageAnswers = await showDialog<LanguageAnswers>(
         context: context,
         builder: (BuildContext context) {
           return SimpleDialog(
             title: Text(allTranslations.text('title_select_language')),
             children: <Widget>[
-              SimpleDialogOption(
-                onPressed: () {
-                  Navigator.pop(context, LanguageAnswers.German);
-                },
-                child: const Text('Deutsch'),
-              ),
-              SimpleDialogOption(
-                onPressed: () {
-                  Navigator.pop(context, LanguageAnswers.English);
-                },
-                child: const Text('English'),
-              ),
-              SimpleDialogOption(
-                onPressed: () {
-                  Navigator.pop(context, LanguageAnswers.Japanese);
-                },
-                child: const Text('Japanisch'),
-              ),
+              _buildDialogAnswer('Deutsch', LanguageAnswers.German),
+              _buildDialogAnswer('English', LanguageAnswers.English),
+              _buildDialogAnswer('Japanisch', LanguageAnswers.Japanese),
             ],
           );
-        })) {
+        });
+
+    switch (languageAnswers) {
       case LanguageAnswers.German:
         await allTranslations.setNewLanguage(language != 'ger' ? 'ger' : 'ger');
         setState(() {});

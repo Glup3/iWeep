@@ -12,7 +12,6 @@ import 'package:iweep/screens/alarm_list_screen.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:iweep/localization/GlobalTranslations.dart';
 
-
 main() async {
   final int helloAlarmID = 0;
   await AndroidAlarmManager.initialize();
@@ -27,8 +26,6 @@ void printHello() {
   final int isolateId = Isolate.current.hashCode;
   print("[$now] Hello, world! isolate=$isolateId");
 }
-
-
 
 class MyApp extends StatelessWidget {
   @override
@@ -46,9 +43,9 @@ class MyApp extends StatelessWidget {
               localizationsDelegates: [
                 GlobalMaterialLocalizations.delegate,
                 GlobalWidgetsLocalizations.delegate,
-            ],
-            // Tells the system which are the supported languages
-            supportedLocales: allTranslations.supportedLocales(),
+              ],
+              // Tells the system which are the supported languages
+              supportedLocales: allTranslations.supportedLocales(),
             ),
           ),
     );
@@ -85,7 +82,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   void initState() {
-     allTranslations.onLocaleChangedCallback = _onLocaleChanged;
+    allTranslations.onLocaleChangedCallback = _onLocaleChanged;
     _scrollController = ScrollController();
     _scrollController.addListener(scrollListener);
     _children.addAll([
@@ -185,7 +182,7 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   _onLocaleChanged() async {
-        // do anything you need to do if the language changes
-        print('Language has been changed to: ${allTranslations.currentLanguage}');
-    }
+    // do anything you need to do if the language changes
+    print('Language has been changed to: ${allTranslations.currentLanguage}');
+  }
 }
