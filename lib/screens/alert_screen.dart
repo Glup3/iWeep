@@ -17,7 +17,8 @@ class _AlertScreenState extends State<AlertScreen> {
   Widget build(BuildContext context) {
     return ScopedModelDescendant<AlertsModel>(
       builder: (BuildContext context, Widget child, AlertsModel model) {
-        final Widget pageContent = _buildPageContent(context, model.selectedAlert);
+        final Widget pageContent =
+            _buildPageContent(context, model.selectedAlert);
         String appBarTitle = "Add Alert";
 
         if (model.selectedAlertedIndex != null) {
@@ -56,7 +57,9 @@ class _AlertScreenState extends State<AlertScreen> {
           child: Text('Okay'),
           onPressed: () {
             Alert alert = Alert(
-              active: model.selectedAlertedIndex == null ? true : model.selectedAlert.active,
+              active: model.selectedAlertedIndex == null
+                  ? true
+                  : model.selectedAlert.active,
               hour: _hour,
               minute: _minute,
               method: "normal",
@@ -88,16 +91,20 @@ class _AlertScreenState extends State<AlertScreen> {
       padding: EdgeInsets.all(10),
       child: Column(
         children: <Widget>[
-          Card(
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                _buildHourPicker(alert),
-                Text(':'),
-                _buildMinutePicker(alert),
-              ],
-            ),
-          )
+          _buildCardTimePicker(alert),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildCardTimePicker(Alert alert) {
+    return Card(
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          _buildHourPicker(alert),
+          Text(':'),
+          _buildMinutePicker(alert),
         ],
       ),
     );
