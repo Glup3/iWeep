@@ -34,7 +34,7 @@ class _AlarmTileState extends State<AlarmTile> {
               },
             ),
             leading: Icon(Icons.hourglass_empty),
-            subtitle: Text("weekdays"),
+            subtitle: Text(_getDaysAsString(alert)),
             onTap: () {
               model.selectAlert(widget.alertIndex);
               Navigator.of(context)
@@ -49,5 +49,17 @@ class _AlarmTileState extends State<AlarmTile> {
         );
       },
     );
+  }
+
+  String _getDaysAsString(Alert alert) {
+    String days = '';
+    if (alert.days.monday) { days += 'Mo '; }
+    if (alert.days.tuesday) { days += 'Tu '; }
+    if (alert.days.wednesday) { days += 'We '; }
+    if (alert.days.thursday) { days += 'Th '; }
+    if (alert.days.friday) { days += 'Fr '; }
+    if (alert.days.saturday) { days += 'Sa '; }
+    if (alert.days.sunday) { days += 'Su'; }
+    return days;
   }
 }
