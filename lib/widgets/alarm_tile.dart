@@ -45,10 +45,41 @@ class _AlarmTileState extends State<AlarmTile> {
                 return AlertScreen();
               }));
             },
+            onLongPress: () {
+              model.selectAlert(widget.alertIndex);
+              _showOptionsDialog(alert, model.deleteAlert);
+            },
           ),
           color: alert.active
               ? Theme.of(context).primaryColorDark
               : Theme.of(context).primaryColorLight,
+        );
+      },
+    );
+  }
+
+  Future<void> _showOptionsDialog(Alert alert, Function deleteAlert) {
+    return showDialog<void>(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Warnung'),
+          content: Text('Wollen Sie diesen Alarm wirklich löschen?'),
+          actions: <Widget>[
+            FlatButton(
+              child: Text('Abbrechen'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+            FlatButton(
+              child: Text('Bestätigen'),
+              onPressed: () {
+                deleteAlert();
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
         );
       },
     );
