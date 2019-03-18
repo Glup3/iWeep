@@ -3,6 +3,7 @@ import 'package:scoped_model/scoped_model.dart';
 import 'package:iweep/model_scoped/alerts.dart';
 import 'package:iweep/model/alert.dart';
 import 'package:numberpicker/numberpicker.dart';
+import 'package:iweep/util/formatting_helper.dart';
 
 class AlertScreen extends StatefulWidget {
   @override
@@ -193,13 +194,15 @@ class _AlertScreenState extends State<AlertScreen> {
 
   String _getDaysAsString(Alert alert) {
     String days = '';
-    if (alert.days.monday) { days += 'Mo '; }
-    if (alert.days.tuesday) { days += 'Tu '; }
-    if (alert.days.wednesday) { days += 'We '; }
-    if (alert.days.thursday) { days += 'Th '; }
-    if (alert.days.friday) { days += 'Fr '; }
-    if (alert.days.saturday) { days += 'Sa '; }
-    if (alert.days.sunday) { days += 'Su'; }
+    if (alert != null) {
+      if (alert.days.monday) { days += 'Mo '; }
+      if (alert.days.tuesday) { days += 'Tu '; }
+      if (alert.days.wednesday) { days += 'We '; }
+      if (alert.days.thursday) { days += 'Th '; }
+      if (alert.days.friday) { days += 'Fr '; }
+      if (alert.days.saturday) { days += 'Sa '; }
+      if (alert.days.sunday) { days += 'Su'; }
+    }
     return days;
   }
 }
@@ -221,6 +224,7 @@ class _CheckboxDialogState extends State<CheckboxDialog> {
       content: Column(
         children: List.generate(widget.activatedDays.length, (int index) {
           return CheckboxListTile(
+            title: Text(FormattingHelper.getDayAsStringFromNumber(index+1)),
             value: widget.activatedDays[index],
             onChanged: (value) {
               setState(() {
