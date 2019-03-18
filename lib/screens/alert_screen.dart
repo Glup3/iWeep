@@ -35,6 +35,17 @@ class _AlertScreenState extends State<AlertScreen> {
             alert.days.sunday,
           ];
         }
+        else {
+          _activatedDays = [
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+          ];
+        }
 
         final Widget pageContent = _buildPageContent(context, alert);
 
