@@ -57,6 +57,7 @@ class AlertsModel extends Model {
   void deleteAlert() {
     _alerts.alert.removeAt(_selectedAlertIndex);
     _selectedAlertIndex = null;
+    notifyListeners();
   }
 
   void selectAlert(int index) {

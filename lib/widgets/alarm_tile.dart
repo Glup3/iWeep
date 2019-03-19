@@ -37,13 +37,17 @@ class _AlarmTileState extends State<AlarmTile> {
               },
             ),
             leading: Icon(Icons.hourglass_empty),
-            subtitle: Text("weekdays"),
+            subtitle: Text(_getDaysAsString(alert)),
             onTap: () {
               model.selectAlert(widget.alertIndex);
               Navigator.of(context)
                   .push(MaterialPageRoute(builder: (BuildContext context) {
                 return AlertScreen();
               }));
+            },
+            onLongPress: () {
+              model.selectAlert(widget.alertIndex);
+              _showOptionsDialog(alert, model.deleteAlert);
             },
           ),
           color: alert.active
@@ -52,5 +56,44 @@ class _AlarmTileState extends State<AlarmTile> {
         );
       },
     );
+  }
+
+  Future<void> _showOptionsDialog(Alert alert, Function deleteAlert) {
+    return showDialog<void>(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Warnung'),
+          content: Text('Wollen Sie diesen Alarm wirklich löschen?'),
+          actions: <Widget>[
+            FlatButton(
+              child: Text('Abbrechen'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+            FlatButton(
+              child: Text('Bestätigen'),
+              onPressed: () {
+                deleteAlert();
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  String _getDaysAsString(Alert alert) {
+    String days = '';
+    if (alert.days.monday) { days += 'Mo '; }
+    if (alert.days.tuesday) { days += 'Tu '; }
+    if (alert.days.wednesday) { days += 'We '; }
+    if (alert.days.thursday) { days += 'Th '; }
+    if (alert.days.friday) { days += 'Fr '; }
+    if (alert.days.saturday) { days += 'Sa '; }
+    if (alert.days.sunday) { days += 'Su'; }
+    return days;
   }
 }
