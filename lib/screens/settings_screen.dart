@@ -3,6 +3,7 @@ import 'package:dynamic_theme/dynamic_theme.dart';
 import 'package:iweep/widgets/list_tile_border.dart';
 import 'package:iweep/data/my_themes.dart';
 import 'package:iweep/localization/GlobalTranslations.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class SettingsScreen extends StatefulWidget {
   @override
@@ -123,27 +124,34 @@ class _SettingsScreenState extends State<SettingsScreen> {
             primaryColor: Theme.of(context).primaryColor == Colors.indigo
                 ? Colors.red
                 : Colors.indigo));
+        saveThemePreference(1);
         break;
       case ThemeAnswers.THEME2:
-        DynamicTheme.of(context).setThemeData(MyThemes.theme2);
+        DynamicTheme.of(context).setThemeData(MyThemes.list[2]);
+        saveThemePreference(2);
         break;
       case ThemeAnswers.THEME3:
-        DynamicTheme.of(context).setThemeData(MyThemes.theme3);
+        DynamicTheme.of(context).setThemeData(MyThemes.list[3]);
+        saveThemePreference(3);
         break;
       case ThemeAnswers.THEME4:
-        DynamicTheme.of(context).setThemeData(MyThemes.theme4);
+        DynamicTheme.of(context).setThemeData(MyThemes.list[4]);
+        saveThemePreference(4);
         break;
       case ThemeAnswers.THEME5:
-        DynamicTheme.of(context).setThemeData(MyThemes.theme5);
+        DynamicTheme.of(context).setThemeData(MyThemes.list[5]);
+        saveThemePreference(5);
         break;
       case ThemeAnswers.THEME6:
-        DynamicTheme.of(context).setThemeData(MyThemes.theme6);
+        DynamicTheme.of(context).setThemeData(MyThemes.list[6]);
+        saveThemePreference(6);
         break;
       case ThemeAnswers.THEME7:
-        DynamicTheme.of(context).setThemeData(MyThemes.theme7);
+        DynamicTheme.of(context).setThemeData(MyThemes.list[7]);
+        saveThemePreference(7);
         break;
       default:
-        DynamicTheme.of(context).setThemeData(MyThemes.theme1);
+        DynamicTheme.of(context).setThemeData(MyThemes.list[0]);
         break;
     }
   }
@@ -205,6 +213,12 @@ class _SettingsScreenState extends State<SettingsScreen> {
       default:
         break;
     }
+  }
+
+  Future<bool> saveThemePreference(int position) async {
+    SharedPreferences preference = await SharedPreferences.getInstance();
+    preference.setInt("theme", position);
+    return preference.commit();
   }
 
   Widget _buildTileAbout() {
