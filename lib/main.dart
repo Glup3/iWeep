@@ -1,6 +1,7 @@
 import 'dart:isolate';
 import 'package:flutter/rendering.dart';
 import 'package:dynamic_theme/dynamic_theme.dart';
+import 'package:iweep/data/my_themes.dart';
 import 'package:scoped_model/scoped_model.dart';
 import 'package:android_alarm_manager/android_alarm_manager.dart';
 
@@ -12,6 +13,7 @@ import 'package:iweep/screens/alarm_list_screen.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:iweep/localization/GlobalTranslations.dart';
 import 'package:iweep/screens/statistic_screen.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 main() async {
   final int helloAlarmID = 0;
@@ -79,6 +81,7 @@ class _MyHomePageState extends State<MyHomePage> {
   final List<Widget> _children = [];
   bool _isHidden = false;
   ScrollController _scrollController = ScrollController();
+  Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
 
   @override
   void initState() {
@@ -91,11 +94,20 @@ class _MyHomePageState extends State<MyHomePage> {
       SettingsScreen(),
     ]);
     super.initState();
+    setInitTheme();
+  }
+
+  void setInitTheme() async {
+    int position = await _prefs.then((SharedPreferences prefs) {
+      return (prefs.getInt('theme') ?? 0);
+    });
+    DynamicTheme.of(context).setThemeData(MyThemes.list[position]);
   }
 
   void scrollListener() {
     setState(() {
-      _isHidden = _scrollController.position.userScrollDirection == ScrollDirection.forward
+      _isHidden = _scrollController.position.userScrollDirection ==
+              ScrollDirection.forward
           ? false
           : true;
     });
