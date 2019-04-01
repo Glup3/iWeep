@@ -85,6 +85,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   void initState() {
+    super.initState();
     allTranslations.onLocaleChangedCallback = _onLocaleChanged;
     _scrollController = ScrollController();
     _scrollController.addListener(scrollListener);
