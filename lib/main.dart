@@ -1,8 +1,6 @@
-import 'dart:isolate';
 import 'package:flutter/rendering.dart';
 import 'package:dynamic_theme/dynamic_theme.dart';
 import 'package:scoped_model/scoped_model.dart';
-import 'package:android_alarm_manager/android_alarm_manager.dart';
 
 import 'package:flutter/material.dart';
 import 'package:iweep/model_scoped/alerts.dart';
@@ -14,18 +12,8 @@ import 'package:iweep/localization/GlobalTranslations.dart';
 import 'package:iweep/screens/statistic_screen.dart';
 
 main() async {
-  final int helloAlarmID = 0;
-  await AndroidAlarmManager.initialize();
   await allTranslations.init();
   runApp(MyApp());
-  await AndroidAlarmManager.periodic(
-      const Duration(milliseconds: 500), helloAlarmID, printHello);
-}
-
-void printHello() {
-  final DateTime now = DateTime.now();
-  final int isolateId = Isolate.current.hashCode;
-  print("[$now] Hello, world! isolate=$isolateId");
 }
 
 class MyApp extends StatelessWidget {
