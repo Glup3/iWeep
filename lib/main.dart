@@ -124,22 +124,7 @@ class _MyHomePageState extends State<MyHomePage> {
     return Scaffold(
       bottomNavigationBar: MyBottomNavigationBar(currentIndex: _currentIndex, onTap: onTabTapped,),
       body: _children[_currentIndex],
-      floatingActionButton: _isHidden ? null : _buildFloatingActionButton(),
-    );
-  }
-
-  Widget _buildFloatingActionButton() {
-    return ScopedModelDescendant<AlertsModel>(
-      builder: (BuildContext context, Widget child, AlertsModel model) {
-        return FloatingActionButton(
-          child: Icon(Icons.add),
-          onPressed: () {
-            model.selectAlert(null);
-            Navigator.push(context,
-                MaterialPageRoute(builder: (context) => AlertScreen()));
-          },
-        );
-      },
+      floatingActionButton: _isHidden ? null : MyFloatingActionButton(),
     );
   }
 
@@ -185,6 +170,24 @@ class MyBottomNavigationBar extends StatelessWidget {
         ),
       ],
       type: BottomNavigationBarType.shifting,
+    );
+  }
+}
+
+class MyFloatingActionButton extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return ScopedModelDescendant<AlertsModel>(
+      builder: (BuildContext context, Widget child, AlertsModel model) {
+        return FloatingActionButton(
+          child: Icon(Icons.add),
+          onPressed: () {
+            model.selectAlert(null);
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => AlertScreen()));
+          },
+        );
+      },
     );
   }
 }
