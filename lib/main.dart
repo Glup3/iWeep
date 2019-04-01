@@ -122,7 +122,7 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      bottomNavigationBar: _buildBottomNavigationBar(),
+      bottomNavigationBar: MyBottomNavigationBar(currentIndex: _currentIndex, onTap: onTabTapped,),
       body: _children[_currentIndex],
       floatingActionButton: _isHidden ? null : _buildFloatingActionButton(),
     );
@@ -143,10 +143,30 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
-  Widget _buildBottomNavigationBar() {
+  void onTabTapped(int index) {
+    setState(() {
+      _currentIndex = index;
+      _isHidden = index == 0 ? false : true;
+    });
+  }
+
+  _onLocaleChanged() async {
+    // do anything you need to do if the language changes
+    print('Language has been changed to: ${allTranslations.currentLanguage}');
+  }
+}
+
+class MyBottomNavigationBar extends StatelessWidget {
+  final int currentIndex;
+  final Function onTap;
+
+  MyBottomNavigationBar({Key key, this.currentIndex, this.onTap}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
     return BottomNavigationBar(
-      currentIndex: _currentIndex,
-      onTap: onTabTapped,
+      currentIndex: currentIndex,
+      onTap: onTap,
       items: [
         BottomNavigationBarItem(
           icon: Icon(Icons.access_alarm),
@@ -166,17 +186,5 @@ class _MyHomePageState extends State<MyHomePage> {
       ],
       type: BottomNavigationBarType.shifting,
     );
-  }
-
-  void onTabTapped(int index) {
-    setState(() {
-      _currentIndex = index;
-      _isHidden = index == 0 ? false : true;
-    });
-  }
-
-  _onLocaleChanged() async {
-    // do anything you need to do if the language changes
-    print('Language has been changed to: ${allTranslations.currentLanguage}');
   }
 }
