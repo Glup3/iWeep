@@ -34,6 +34,8 @@ class _AlarmTileState extends State<AlarmTile> {
                 setState(() {
                   alert.active = value;
                 });
+                model.selectAlert(widget.alertIndex);
+                model.updateAlert(alert);
               },
             ),
             leading: Icon(Icons.hourglass_empty),
