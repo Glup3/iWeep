@@ -12,6 +12,8 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:iweep/localization/GlobalTranslations.dart';
 import 'package:iweep/screens/statistic_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:iweep/util/shared_preferences_helper.dart';
+import 'package:iweep/model/alert.dart';
 
 main() async {
   await allTranslations.init();
@@ -70,6 +72,7 @@ class _MyHomePageState extends State<MyHomePage> {
   bool _isHidden = false;
   ScrollController _scrollController = ScrollController();
   Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
+  bool _initialLoad = false;
 
   @override
   void initState() {
@@ -111,8 +114,34 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      bottomNavigationBar: MyBottomNavigationBar(currentIndex: _currentIndex, onTap: onTabTapped,),
-      body: _children[_currentIndex],
+      bottomNavigationBar: MyBottomNavigationBar(
+        currentIndex: _currentIndex,
+        onTap: onTabTapped,
+      ),
+      body: ScopedModelDescendant<AlertsModel>(
+        builder: (context, widget, model) {
+          return FutureBuilder<String>(
+            future: SharedPreferencesHelper.getAlerts(),
+            builder: (context, snapshot) {
+              if (snapshot.hasError) {
+                return Center(child: Text('ERROR LOADING DATA'));
+              }
+
+              if (snapshot.hasData && !_initialLoad) {
+                Alerts alerts = Alerts.fromJsonString(snapshot.data);
+
+                for (var alert in alerts.alert) {
+                  model.addAlert(alert);
+                }
+
+                _initialLoad = true;
+              }
+
+              return _children[_currentIndex];
+            },
+          );
+        },
+      ),
       floatingActionButton: _isHidden ? null : MyFloatingActionButton(),
     );
   }

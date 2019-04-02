@@ -19,7 +19,7 @@ class SharedPreferencesHelper {
   static Future<String> getAlerts() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
 
-    return prefs.getString(_kAlerts) ?? ''; //TODO need default value
+    return prefs.getString(_kAlerts) ?? """{"alert":[]}""";
   }
 
   static Future<bool> setAlerts(String value) async {
