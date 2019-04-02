@@ -85,7 +85,6 @@ class _MyHomePageState extends State<MyHomePage> {
       StatisticScreen(),
       SettingsScreen(),
     ]);
-    super.initState();
     setInitTheme();
   }
 
