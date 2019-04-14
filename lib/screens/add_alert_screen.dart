@@ -17,7 +17,10 @@ class _AddAlertScreenState extends State<AddAlertScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Add Alert'),
+        title: Text(
+          'Add Alert',
+          style: Theme.of(context).textTheme.body1,
+        ),
       ),
       bottomNavigationBar: Container(
         color: Colors.grey[300],
@@ -44,7 +47,10 @@ class _AddAlertScreenState extends State<AddAlertScreen> {
     return ScopedModelDescendant<AlertsModel>(
       builder: (BuildContext context, Widget child, AlertsModel model) {
         return FlatButton(
-          child: Text('Okay'),
+          child: Text(
+            'Okay',
+            style: Theme.of(context).textTheme.body1,
+          ),
           onPressed: () {
             _addAlert(model.addAlert);
             Navigator.pop(context);
@@ -56,7 +62,10 @@ class _AddAlertScreenState extends State<AddAlertScreen> {
 
   Widget _buildCancelButton() {
     return FlatButton(
-      child: Text('Abbrechen'),
+      child: Text(
+        'Abbrechen',
+        style: Theme.of(context).textTheme.body1,
+      ),
       onPressed: () {
         Navigator.pop(context);
       },

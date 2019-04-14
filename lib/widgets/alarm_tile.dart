@@ -24,32 +24,34 @@ class _AlarmTileState extends State<AlarmTile> {
       builder: (BuildContext context, Widget child, AlertsModel model) {
         Alert alert = model.alerts[widget.alertIndex];
         return Card(
-          child: ListTile(
-            title: Text(
-                FormattingHelper.formatToTimeString(alert.hour, alert.minute)),
-            trailing: Switch(
-              value: alert.active,
-              activeColor: Theme.of(context).accentColor,
-              onChanged: (value) {
-                setState(() {
-                  alert.active = value;
-                });
+            child: ListTile(
+              title: Text(
+                FormattingHelper.formatToTimeString(alert.hour, alert.minute),
+                style: Theme.of(context).textTheme.subtitle,
+              ),
+              trailing: Switch(
+                value: alert.active,
+                activeColor: Theme.of(context).primaryColor,
+                onChanged: (value) {
+                  setState(() {
+                    alert.active = value;
+                  });
+                },
+              ),
+              leading: Icon(Icons.hourglass_empty,color: Colors.grey[300],),
+              subtitle: Text(
+                "weekdays",
+                style: Theme.of(context).textTheme.subtitle,
+              ),
+              onTap: () {
+                model.selectAlert(widget.alertIndex);
+                Navigator.of(context)
+                    .push(MaterialPageRoute(builder: (BuildContext context) {
+                  return AlertScreen();
+                }));
               },
             ),
-            leading: Icon(Icons.hourglass_empty),
-            subtitle: Text("weekdays"),
-            onTap: () {
-              model.selectAlert(widget.alertIndex);
-              Navigator.of(context)
-                  .push(MaterialPageRoute(builder: (BuildContext context) {
-                return AlertScreen();
-              }));
-            },
-          ),
-          color: alert.active
-              ? Theme.of(context).primaryColorDark
-              : Theme.of(context).primaryColorLight,
-        );
+            color: Theme.of(context).cardColor);
       },
     );
   }

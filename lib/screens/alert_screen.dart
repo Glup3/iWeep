@@ -17,7 +17,8 @@ class _AlertScreenState extends State<AlertScreen> {
   Widget build(BuildContext context) {
     return ScopedModelDescendant<AlertsModel>(
       builder: (BuildContext context, Widget child, AlertsModel model) {
-        final Widget pageContent = _buildPageContent(context, model.selectedAlert);
+        final Widget pageContent =
+            _buildPageContent(context, model.selectedAlert);
         String appBarTitle = "Add Alert";
 
         if (model.selectedAlertedIndex != null) {
@@ -26,7 +27,10 @@ class _AlertScreenState extends State<AlertScreen> {
 
         return Scaffold(
           appBar: AppBar(
-            title: Text(appBarTitle),
+            title: Text(
+              appBarTitle,
+              style: Theme.of(context).textTheme.body1,
+            ),
           ),
           body: pageContent,
           backgroundColor: Theme.of(context).canvasColor,
@@ -53,10 +57,15 @@ class _AlertScreenState extends State<AlertScreen> {
     return ScopedModelDescendant<AlertsModel>(
       builder: (BuildContext context, Widget child, AlertsModel model) {
         return FlatButton(
-          child: Text('Okay'),
+          child: Text(
+            'Okay',
+            style: Theme.of(context).textTheme.body1,
+          ),
           onPressed: () {
             Alert alert = Alert(
-              active: model.selectedAlertedIndex == null ? true : model.selectedAlert.active,
+              active: model.selectedAlertedIndex == null
+                  ? true
+                  : model.selectedAlert.active,
               hour: _hour,
               minute: _minute,
               method: "normal",
@@ -93,7 +102,10 @@ class _AlertScreenState extends State<AlertScreen> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 _buildHourPicker(alert),
-                Text(':'),
+                Text(
+                  ':',
+                  style: Theme.of(context).textTheme.body1,
+                ),
                 _buildMinutePicker(alert),
               ],
             ),
@@ -105,7 +117,10 @@ class _AlertScreenState extends State<AlertScreen> {
 
   Widget _buildCancelButton() {
     return FlatButton(
-      child: Text('Abbrechen'),
+      child: Text(
+        'Abbrechen',
+        style: Theme.of(context).textTheme.body1,
+      ),
       onPressed: () {
         Navigator.pop(context);
       },
