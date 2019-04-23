@@ -24,38 +24,39 @@ class _AlarmTileState extends State<AlarmTile> {
       builder: (BuildContext context, Widget child, AlertsModel model) {
         Alert alert = model.alerts[widget.alertIndex];
         return Card(
-          child: ListTile(
-            title: Text(
-                FormattingHelper.formatToTimeString(alert.hour, alert.minute)),
-            trailing: Switch(
-              value: alert.active,
-              activeColor: Theme.of(context).accentColor,
-              onChanged: (value) {
-                setState(() {
-                  alert.active = value;
-                });
-                model.selectAlert(widget.alertIndex);
-                model.updateAlert(alert);
-              },
-            ),
-            leading: Icon(Icons.hourglass_empty),
-            subtitle: Text(_getDaysAsString(alert)),
-            onTap: () {
+            child: ListTile(
+          title: Text(
+            FormattingHelper.formatToTimeString(alert.hour, alert.minute),
+            style: Theme.of(context).textTheme.subtitle,
+          ),
+          trailing: Switch(
+            value: alert.active,
+            activeColor: Theme.of(context).primaryColor,
+            onChanged: (value) {
+              setState(() {
+                alert.active = value;
+              });
               model.selectAlert(widget.alertIndex);
-              Navigator.of(context)
-                  .push(MaterialPageRoute(builder: (BuildContext context) {
-                return AlertScreen();
-              }));
-            },
-            onLongPress: () {
-              model.selectAlert(widget.alertIndex);
-              _showOptionsDialog(alert, model.deleteAlert);
+              model.updateAlert(alert);
             },
           ),
-          color: alert.active
-              ? Theme.of(context).primaryColorDark
-              : Theme.of(context).primaryColorLight,
-        );
+          leading: Icon(Icons.hourglass_empty),
+          subtitle: Text(
+            _getDaysAsString(alert),
+            style: Theme.of(context).textTheme.subtitle,
+          ),
+          onTap: () {
+            model.selectAlert(widget.alertIndex);
+            Navigator.of(context)
+                .push(MaterialPageRoute(builder: (BuildContext context) {
+              return AlertScreen();
+            }));
+          },
+          onLongPress: () {
+            model.selectAlert(widget.alertIndex);
+            _showOptionsDialog(alert, model.deleteAlert);
+          },
+        ));
       },
     );
   }
@@ -89,13 +90,27 @@ class _AlarmTileState extends State<AlarmTile> {
 
   String _getDaysAsString(Alert alert) {
     String days = '';
-    if (alert.days.monday) { days += 'Mo '; }
-    if (alert.days.tuesday) { days += 'Tu '; }
-    if (alert.days.wednesday) { days += 'We '; }
-    if (alert.days.thursday) { days += 'Th '; }
-    if (alert.days.friday) { days += 'Fr '; }
-    if (alert.days.saturday) { days += 'Sa '; }
-    if (alert.days.sunday) { days += 'Su'; }
+    if (alert.days.monday) {
+      days += 'Mo ';
+    }
+    if (alert.days.tuesday) {
+      days += 'Tu ';
+    }
+    if (alert.days.wednesday) {
+      days += 'We ';
+    }
+    if (alert.days.thursday) {
+      days += 'Th ';
+    }
+    if (alert.days.friday) {
+      days += 'Fr ';
+    }
+    if (alert.days.saturday) {
+      days += 'Sa ';
+    }
+    if (alert.days.sunday) {
+      days += 'Su';
+    }
     return days;
   }
 }

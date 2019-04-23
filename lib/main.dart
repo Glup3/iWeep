@@ -172,17 +172,26 @@ class MyBottomNavigationBar extends StatelessWidget {
       items: [
         BottomNavigationBarItem(
           icon: Icon(Icons.access_alarm),
-          title: Text(allTranslations.text('tab_alarm')),
+          title: Text(
+            allTranslations.text('tab_alarm'),
+            style: Theme.of(context).textTheme.body1,
+          ),
           backgroundColor: Colors.blue,
         ),
         BottomNavigationBarItem(
           icon: Icon(Icons.show_chart),
-          title: Text(allTranslations.text('tab_graph')),
+          title: Text(
+            allTranslations.text('tab_graph'),
+            style: Theme.of(context).textTheme.body1,
+          ),
           backgroundColor: Colors.red,
         ),
         BottomNavigationBarItem(
           icon: Icon(Icons.settings),
-          title: Text(allTranslations.text('tab_settings')),
+          title: Text(
+            allTranslations.text('tab_settings'),
+            style: Theme.of(context).textTheme.body1,
+          ),
           backgroundColor: Colors.green,
         ),
       ],
