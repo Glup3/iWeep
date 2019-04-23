@@ -1,21 +1,11 @@
 import 'package:scoped_model/scoped_model.dart';
 import 'package:flutter/material.dart';
+
 import 'package:iweep/model/alert.dart';
+import 'package:iweep/util/shared_preferences_helper.dart';
 
 class AlertsModel extends Model {
-  Alerts _alerts = Alerts(alert: [
-      Alert(active: true, minute: 30, hour: 6, method: "math", days: Days(monday: false, tuesday: false, wednesday: false, thursday: true, friday: true, saturday: false, sunday: true)),
-      Alert(active: false, minute: 00, hour: 7, method: "math", days: Days(monday: false, tuesday: false, wednesday: false, thursday: true, friday: true, saturday: false, sunday: true)),
-      Alert(active: false, minute: 04, hour: 1, method: "math", days: Days(monday: false, tuesday: false, wednesday: false, thursday: true, friday: true, saturday: false, sunday: true)),
-      Alert(active: true, minute: 10, hour: 3, method: "math", days: Days(monday: false, tuesday: false, wednesday: false, thursday: true, friday: true, saturday: false, sunday: true)),
-      Alert(active: true, minute: 12, hour: 12, method: "math", days: Days(monday: false, tuesday: false, wednesday: false, thursday: true, friday: true, saturday: false, sunday: true)),
-      Alert(active: true, minute: 30, hour: 6, method: "math", days: Days(monday: false, tuesday: false, wednesday: false, thursday: true, friday: true, saturday: false, sunday: true)),
-      Alert(active: true, minute: 36, hour: 0, method: "math", days: Days(monday: false, tuesday: false, wednesday: false, thursday: true, friday: true, saturday: false, sunday: true)),
-      Alert(active: false, minute: 30, hour: 23, method: "math", days: Days(monday: false, tuesday: false, wednesday: false, thursday: true, friday: true, saturday: false, sunday: true)),
-      Alert(active: true, minute: 30, hour: 4, method: "math", days: Days(monday: false, tuesday: false, wednesday: false, thursday: true, friday: true, saturday: false, sunday: true)),
-      Alert(active: true, minute: 30, hour: 7, method: "math", days: Days(monday: false, tuesday: false, wednesday: false, thursday: true, friday: true, saturday: false, sunday: true)),
-      Alert(active: false, minute: 30, hour: 11, method: "math", days: Days(monday: false, tuesday: false, wednesday: false, thursday: true, friday: true, saturday: false, sunday: true)),
-    ]);
+  Alerts _alerts = Alerts(alert: []);
 
   int _selectedAlertIndex;
   ThemeData _themeData;
@@ -47,20 +37,29 @@ class AlertsModel extends Model {
   void addAlert(Alert alert) {
     _alerts.alert.add(alert);
     _selectedAlertIndex = null;
+    notifyListeners();
+    _saveAlerts();
   }
 
   void updateAlert(Alert alert) {
     _alerts.alert[_selectedAlertIndex] = alert;
     _selectedAlertIndex = null;
+    notifyListeners();
+    _saveAlerts();
   }
 
   void deleteAlert() {
     _alerts.alert.removeAt(_selectedAlertIndex);
     _selectedAlertIndex = null;
+    notifyListeners();
+    _saveAlerts();
   }
 
   void selectAlert(int index) {
     _selectedAlertIndex = index;
   }
 
+  void _saveAlerts() {
+    SharedPreferencesHelper.setAlerts(_alerts.toJsonString());
+  }
 }

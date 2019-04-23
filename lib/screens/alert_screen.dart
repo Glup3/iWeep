@@ -3,6 +3,7 @@ import 'package:scoped_model/scoped_model.dart';
 import 'package:iweep/model_scoped/alerts.dart';
 import 'package:iweep/model/alert.dart';
 import 'package:numberpicker/numberpicker.dart';
+import 'package:iweep/util/formatting_helper.dart';
 
 class AlertScreen extends StatefulWidget {
   @override
@@ -12,6 +13,7 @@ class AlertScreen extends StatefulWidget {
 class _AlertScreenState extends State<AlertScreen> {
   int _hour;
   int _minute;
+  List<bool> _activatedDays;
 
   @override
   Widget build(BuildContext context) {
@@ -19,10 +21,32 @@ class _AlertScreenState extends State<AlertScreen> {
       builder: (BuildContext context, Widget child, AlertsModel model) {
         final Widget pageContent =
             _buildPageContent(context, model.selectedAlert);
+        Alert alert = model.selectedAlert;
+
         String appBarTitle = "Add Alert";
 
-        if (model.selectedAlertedIndex != null) {
+        if (alert != null) {
           appBarTitle = "Edit Alert";
+          _activatedDays = [
+            alert.days.monday,
+            alert.days.tuesday,
+            alert.days.wednesday,
+            alert.days.thursday,
+            alert.days.friday,
+            alert.days.saturday,
+            alert.days.sunday,
+          ];
+        }
+        else {
+          _activatedDays = [
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+          ];
         }
 
         return Scaffold(
@@ -70,13 +94,14 @@ class _AlertScreenState extends State<AlertScreen> {
               minute: _minute,
               method: "normal",
               days: Days(
-                  monday: true,
-                  tuesday: false,
-                  wednesday: true,
-                  thursday: false,
-                  friday: true,
-                  saturday: false,
-                  sunday: true),
+                monday: _activatedDays[0],
+                tuesday: _activatedDays[1],
+                wednesday: _activatedDays[2],
+                thursday: _activatedDays[3],
+                friday: _activatedDays[4],
+                saturday: _activatedDays[5],
+                sunday: _activatedDays[6],
+              ),
             );
 
             if (model.selectedAlertedIndex == null) {
@@ -109,7 +134,44 @@ class _AlertScreenState extends State<AlertScreen> {
                 _buildMinutePicker(alert),
               ],
             ),
-          )
+          ),
+          _buildCardTimePicker(alert),
+          _buildCardDayPicker(alert),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildCardDayPicker(Alert alert) {
+    return Card(
+      child: ListTile(
+        leading: Text('Wiederholen'),
+        onTap: () => _showDayPickerDialog(alert),
+        trailing: Text(_getDaysAsString(alert)),
+      ),
+    );
+  }
+
+  Future<void> _showDayPickerDialog(Alert alert) async {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return CheckboxDialog(
+          activatedDays: _activatedDays,
+        );
+      },
+    );
+  }
+
+  Widget _buildCardTimePicker(Alert alert) {
+    return Card(
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          _buildHourPicker(alert),
+          Text(':'),
+          _buildMinutePicker(alert),
         ],
       ),
     );
@@ -160,6 +222,57 @@ class _AlertScreenState extends State<AlertScreen> {
           _minute = number;
         });
       },
+    );
+  }
+
+  String _getDaysAsString(Alert alert) {
+    String days = '';
+    if (alert != null) {
+      if (alert.days.monday) { days += 'Mo '; }
+      if (alert.days.tuesday) { days += 'Tu '; }
+      if (alert.days.wednesday) { days += 'We '; }
+      if (alert.days.thursday) { days += 'Th '; }
+      if (alert.days.friday) { days += 'Fr '; }
+      if (alert.days.saturday) { days += 'Sa '; }
+      if (alert.days.sunday) { days += 'Su'; }
+    }
+    return days;
+  }
+}
+
+class CheckboxDialog extends StatefulWidget {
+  final List<bool> activatedDays;
+
+  CheckboxDialog({Key key, this.activatedDays}) : super(key: key);
+
+  @override
+  _CheckboxDialogState createState() => _CheckboxDialogState();
+}
+
+class _CheckboxDialogState extends State<CheckboxDialog> {
+  @override
+  Widget build(BuildContext context) {
+    return AlertDialog(
+      title: Text('Wochentage auswählen'),
+      content: Column(
+        children: List.generate(widget.activatedDays.length, (int index) {
+          return CheckboxListTile(
+            title: Text(FormattingHelper.getDayAsStringFromNumber(index+1)),
+            value: widget.activatedDays[index],
+            onChanged: (value) {
+              setState(() {
+                widget.activatedDays[index] = !widget.activatedDays[index];
+              });
+            },
+          );
+        }),
+      ),
+      actions: <Widget>[
+        FlatButton(
+          child: Text('Okay'),
+          onPressed: () => Navigator.of(context).pop(),
+        )
+      ],
     );
   }
 }

@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 class Alerts {
   List<Alert> alert;
 
@@ -18,6 +20,14 @@ class Alerts {
       data['alert'] = this.alert.map((v) => v.toJson()).toList();
     }
     return data;
+  }
+
+  factory Alerts.fromJsonString(String jsonString) {
+    return Alerts.fromJson(json.decode(jsonString));
+  }
+
+  String toJsonString() {
+    return json.encode(this.toJson());
   }
 }
 
