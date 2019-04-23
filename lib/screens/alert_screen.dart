@@ -122,19 +122,6 @@ class _AlertScreenState extends State<AlertScreen> {
       padding: EdgeInsets.all(10),
       child: Column(
         children: <Widget>[
-          Card(
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                _buildHourPicker(alert),
-                Text(
-                  ':',
-                  style: Theme.of(context).textTheme.body1,
-                ),
-                _buildMinutePicker(alert),
-              ],
-            ),
-          ),
           _buildCardTimePicker(alert),
           _buildCardDayPicker(alert),
         ],
