@@ -8,7 +8,7 @@ class MyAlarm {
     player.loop('alarm1.mp3');
   }
 
-  static void playTheAlarm(Duration duration, int id) async {
+  static void playTheAlarmOnce(Duration duration, int id) async {
     await AndroidAlarmManager.oneShot(duration, id, playAlarmAsLoop);
   }
 }

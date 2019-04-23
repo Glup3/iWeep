@@ -116,7 +116,9 @@ class _AlertScreenState extends State<AlertScreen> {
               model.updateAlert(alert);
             }
 
-            MyAlarm.playTheAlarm(const Duration(seconds: 5), id);
+            DateTime now = DateTime.now();
+
+            MyAlarm.playTheAlarmOnce(now.difference(DateTime(now.year, now.month, now.day, alert.hour, alert.minute)), id);
 
             Navigator.pop(context);
           },
