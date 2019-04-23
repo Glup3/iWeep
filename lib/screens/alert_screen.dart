@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:scoped_model/scoped_model.dart';
+import 'package:numberpicker/numberpicker.dart';
+
 import 'package:iweep/model_scoped/alerts.dart';
 import 'package:iweep/model/alert.dart';
-import 'package:numberpicker/numberpicker.dart';
 import 'package:iweep/util/formatting_helper.dart';
+import 'package:iweep/alert/MyAlarm.dart';
 
 class AlertScreen extends StatefulWidget {
   @override
@@ -85,7 +87,7 @@ class _AlertScreenState extends State<AlertScreen> {
             'Okay',
             style: Theme.of(context).textTheme.body1,
           ),
-          onPressed: () {
+          onPressed: () async {
             Alert alert = Alert(
               active: model.selectedAlertedIndex == null
                   ? true
@@ -104,11 +106,17 @@ class _AlertScreenState extends State<AlertScreen> {
               ),
             );
 
+            int id = 0;
+
             if (model.selectedAlertedIndex == null) {
+              id = model.alerts.length;
               model.addAlert(alert);
             } else {
+              id = model.selectedAlertedIndex;
               model.updateAlert(alert);
             }
+
+            MyAlarm.playTheAlarm(const Duration(seconds: 5), id);
 
             Navigator.pop(context);
           },
