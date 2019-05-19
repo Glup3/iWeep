@@ -19,7 +19,7 @@ class MyBottomNavigationBar extends StatelessWidget {
             allTranslations.text('tab_alarm'),
             style: Theme.of(context).textTheme.body1,
           ),
-          backgroundColor: Colors.blue,
+          backgroundColor: Theme.of(context).primaryColor,
         ),
         BottomNavigationBarItem(
           icon: Icon(Icons.show_chart),
@@ -27,7 +27,7 @@ class MyBottomNavigationBar extends StatelessWidget {
             allTranslations.text('tab_graph'),
             style: Theme.of(context).textTheme.body1,
           ),
-          backgroundColor: Colors.red,
+          backgroundColor: Theme.of(context).primaryColor,
         ),
         BottomNavigationBarItem(
           icon: Icon(Icons.settings),
@@ -35,7 +35,7 @@ class MyBottomNavigationBar extends StatelessWidget {
             allTranslations.text('tab_settings'),
             style: Theme.of(context).textTheme.body1,
           ),
-          backgroundColor: Colors.green,
+          backgroundColor: Theme.of(context).primaryColor,
         ),
       ],
       type: BottomNavigationBarType.shifting,
