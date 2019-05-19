@@ -70,6 +70,15 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       appBar: AppBar(
         title: Text('iWeep'),
+        actions: <Widget>[
+          IconButton(
+            icon: Icon(Icons.access_alarms),
+            onPressed: () {
+              // Fake it till you make it
+              turnOffAlertDialog();
+            },
+          )
+        ],
       ),
       bottomNavigationBar: MyBottomNavigationBar(
         currentIndex: _currentIndex,
@@ -111,7 +120,32 @@ class _HomePageState extends State<HomePage> {
   }
 
   _onLocaleChanged() async {
-    // do anything you need to do if the language changes
     print('Language has been changed to: ${allTranslations.currentLanguage}');
+  }
+
+  Future<void> turnOffAlertDialog() async {
+    return showDialog<void>(
+        context: context,
+        barrierDismissible: false,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text('Alert is ringing!'),
+            content: SingleChildScrollView(
+              child: ListBody(
+                children: <Widget>[
+                  Text('It\'s time to wake up!'),
+                ],
+              ),
+            ),
+            actions: <Widget>[
+              FlatButton(
+                child: Text('Deactivate'),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              )
+            ],
+          );
+        });
   }
 }

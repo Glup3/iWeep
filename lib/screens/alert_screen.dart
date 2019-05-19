@@ -5,7 +5,7 @@ import 'package:numberpicker/numberpicker.dart';
 import 'package:iweep/model_scoped/alerts.dart';
 import 'package:iweep/model/alert.dart';
 import 'package:iweep/util/formatting_helper.dart';
-import 'package:iweep/alert/MyAlarm.dart';
+import 'package:iweep/alert/my_alarm.dart';
 
 class AlertScreen extends StatefulWidget {
   @override
@@ -116,9 +116,7 @@ class _AlertScreenState extends State<AlertScreen> {
               model.updateAlert(alert);
             }
 
-            DateTime now = DateTime.now();
-
-            MyAlarm.playTheAlarmOnce(now.difference(DateTime(now.year, now.month, now.day, alert.hour, alert.minute)), id);
+            MyAlarm.playTheAlarmUntilDateTime(alert, id);
 
             Navigator.pop(context);
           },
