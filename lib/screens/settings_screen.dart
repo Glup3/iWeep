@@ -15,8 +15,7 @@ enum ThemeAnswers { THEME1, THEME2, THEME3, THEME4, THEME5, THEME6, THEME7 }
 enum LanguageAnswers { German, English, Japanese }
 
 class _SettingsScreenState extends State<SettingsScreen> {
-  bool _value1 = false;
-  bool _value2 = false;
+
   final String language = allTranslations.currentLanguage;
 
   @override
@@ -26,40 +25,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
       child: ListView(
         children: <Widget>[
           new TileHeader(context: context, title: allTranslations.text('tab_settings')),
-          ListTileBorder(
-            child: CheckboxListTile(
-              title: Text(
-                allTranslations.text("tab_bag"),
-                style: Theme.of(context).textTheme.body2,
-              ),
-              value: _value1,
-              activeColor: Colors.purple,
-              onChanged: (value) {
-                setState(() {
-                  _value1 = value;
-                });
-              },
-            ),
-          ),
-          ListTileBorder(
-            child: SwitchListTile(
-              title: Text(
-                'Ehrenmann',
-                style: Theme.of(context).textTheme.body2,
-              ),
-              subtitle: Text(
-                'Nur für Ehrenmänner',
-                style: Theme.of(context).textTheme.body2,
-              ),
-              value: _value2,
-              activeColor: Colors.purple,
-              onChanged: (value) {
-                setState(() {
-                  _value2 = value;
-                });
-              },
-            ),
-          ),
           ListTileBorder(
             child: ListTile(
               title: Text(allTranslations.text('title_change_theme'),
@@ -88,49 +53,49 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   Navigator.pop(context, ThemeAnswers.THEME1);
                 },
                 child:
-                    Text('Theme 1', style: Theme.of(context).textTheme.body2),
+                    Text('Theme 1', style: Theme.of(context).textTheme.body1),
               ),
               SimpleDialogOption(
                 onPressed: () {
                   Navigator.pop(context, ThemeAnswers.THEME2);
                 },
                 child:
-                    Text('Theme 2', style: Theme.of(context).textTheme.body2),
+                    Text('Theme 2', style: Theme.of(context).textTheme.body1),
               ),
               SimpleDialogOption(
                 onPressed: () {
                   Navigator.pop(context, ThemeAnswers.THEME3);
                 },
                 child:
-                    Text('Theme 3', style: Theme.of(context).textTheme.body2),
+                    Text('Theme 3', style: Theme.of(context).textTheme.body1),
               ),
               SimpleDialogOption(
                 onPressed: () {
                   Navigator.pop(context, ThemeAnswers.THEME4);
                 },
                 child:
-                    Text('Theme 4', style: Theme.of(context).textTheme.body2),
+                    Text('Theme 4', style: Theme.of(context).textTheme.body1),
               ),
               SimpleDialogOption(
                 onPressed: () {
                   Navigator.pop(context, ThemeAnswers.THEME5);
                 },
                 child:
-                    Text('Theme 5', style: Theme.of(context).textTheme.body2),
+                    Text('Theme 5', style: Theme.of(context).textTheme.body1),
               ),
               SimpleDialogOption(
                 onPressed: () {
                   Navigator.pop(context, ThemeAnswers.THEME6);
                 },
                 child:
-                    Text('Theme 6', style: Theme.of(context).textTheme.body2),
+                    Text('Theme 6', style: Theme.of(context).textTheme.body1),
               ),
               SimpleDialogOption(
                 onPressed: () {
                   Navigator.pop(context, ThemeAnswers.THEME7);
                 },
                 child:
-                    Text('Theme 7', style: Theme.of(context).textTheme.body2),
+                    Text('Theme 7', style: Theme.of(context).textTheme.body1),
               ),
             ],
           );
@@ -188,7 +153,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
         builder: (BuildContext context) {
           return SimpleDialog(
             title: Text(allTranslations.text('title_select_language'),
-                style: Theme.of(context).textTheme.body2),
+                style: Theme.of(context).textTheme.body1),
             children: <Widget>[
               DialogLanguageAnswer(
                   text: 'Deutsch', answer: LanguageAnswers.German),
@@ -265,7 +230,7 @@ class DialogLanguageAnswer extends StatelessWidget {
   Widget build(BuildContext context) {
     return SimpleDialogOption(
       onPressed: () => Navigator.pop(context, answer),
-      child: Text(text, style: Theme.of(context).textTheme.body2),
+      child: Text(text, style: Theme.of(context).textTheme.body1),
     );
   }
 }
