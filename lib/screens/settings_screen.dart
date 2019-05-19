@@ -30,7 +30,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
             child: CheckboxListTile(
               title: Text(
                 allTranslations.text("tab_bag"),
-                style: Theme.of(context).textTheme.body1,
+                style: Theme.of(context).textTheme.body2,
               ),
               value: _value1,
               activeColor: Colors.purple,
@@ -45,11 +45,11 @@ class _SettingsScreenState extends State<SettingsScreen> {
             child: SwitchListTile(
               title: Text(
                 'Ehrenmann',
-                style: Theme.of(context).textTheme.body1,
+                style: Theme.of(context).textTheme.body2,
               ),
               subtitle: Text(
                 'Nur für Ehrenmänner',
-                style: Theme.of(context).textTheme.body1,
+                style: Theme.of(context).textTheme.body2,
               ),
               value: _value2,
               activeColor: Colors.purple,
@@ -63,7 +63,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
           ListTileBorder(
             child: ListTile(
               title: Text(allTranslations.text('title_change_theme'),
-                  style: Theme.of(context).textTheme.body1),
+                  style: Theme.of(context).textTheme.body2),
               onTap: _askedToLead,
             ),
           ),
@@ -175,7 +175,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
       child: ListTile(
         title: Text(
           allTranslations.text('title_change_language'),
-          style: Theme.of(context).textTheme.body1,
+          style: Theme.of(context).textTheme.body2,
         ),
         onTap: _language,
       ),
@@ -238,7 +238,7 @@ class TileHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      title: Text(title, style: Theme.of(context).textTheme.body1),
+      title: Text(title, style: Theme.of(context).textTheme.body2),
     );
   }
 }
@@ -249,7 +249,7 @@ class TileAbout extends StatelessWidget {
     return ListTile(
       title: Text(
         allTranslations.text('tab_about'),
-        style: Theme.of(context).textTheme.body1,
+        style: Theme.of(context).textTheme.body2,
       ),
     );
   }

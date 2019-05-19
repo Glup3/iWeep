@@ -69,7 +69,10 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('iWeep'),
+        title: Text(
+          'iWeep',
+          style: Theme.of(context).textTheme.headline,
+        ),
         actions: <Widget>[
           IconButton(
             icon: Icon(Icons.access_alarms),

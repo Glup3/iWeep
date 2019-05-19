@@ -55,7 +55,7 @@ class _AlertScreenState extends State<AlertScreen> {
           appBar: AppBar(
             title: Text(
               appBarTitle,
-              style: Theme.of(context).textTheme.body1,
+              style: Theme.of(context).textTheme.body2,
             ),
           ),
           body: pageContent,
@@ -72,7 +72,7 @@ class _AlertScreenState extends State<AlertScreen> {
       child: Row(
         children: <Widget>[
           Expanded(flex: 1, child: _buildCancelButton()),
-          RotatedBox(child: Icon(Icons.remove), quarterTurns: 1),
+          RotatedBox(child: Icon(Icons.remove, color: Theme.of(context).primaryIconTheme.color,), quarterTurns: 1),
           Expanded(flex: 1, child: _buildOkayButton()),
         ],
       ),
@@ -85,7 +85,7 @@ class _AlertScreenState extends State<AlertScreen> {
         return FlatButton(
           child: Text(
             'Okay',
-            style: Theme.of(context).textTheme.body1,
+            style: Theme.of(context).textTheme.body2,
           ),
           onPressed: () async {
             Alert alert = Alert(
@@ -176,7 +176,7 @@ class _AlertScreenState extends State<AlertScreen> {
     return FlatButton(
       child: Text(
         'Abbrechen',
-        style: Theme.of(context).textTheme.body1,
+        style: Theme.of(context).textTheme.body2,
       ),
       onPressed: () {
         Navigator.pop(context);

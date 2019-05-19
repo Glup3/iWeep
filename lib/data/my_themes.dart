@@ -8,6 +8,16 @@ class MyThemes {
       primaryColorDark: Colors.lightBlue,
       primaryColorLight: Colors.lightBlue,
       canvasColor: Colors.indigo,
+      primaryIconTheme: IconThemeData(
+        color: Colors.white
+      ),
+      textTheme: TextTheme(
+        title: TextStyle(color: Colors.black),
+        body1: TextStyle(color: Colors.black),
+        body2: TextStyle(color: Colors.white),
+        subtitle: TextStyle(color: Colors.black),
+        headline: TextStyle(color: Colors.white),
+      ),
     ),
     ThemeData(
       accentColor: Colors.cyan,

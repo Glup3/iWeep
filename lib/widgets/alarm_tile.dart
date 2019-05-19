@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import '../model/alert.dart';
 import '../util/formatting_helper.dart';
-import 'package:iweep/localization/GlobalTranslations.dart';
 import 'package:scoped_model/scoped_model.dart';
 import 'package:iweep/model/alert.dart';
 import 'package:iweep/util/formatting_helper.dart';
@@ -24,39 +23,40 @@ class _AlarmTileState extends State<AlarmTile> {
       builder: (BuildContext context, Widget child, AlertsModel model) {
         Alert alert = model.alerts[widget.alertIndex];
         return Card(
-            child: ListTile(
-          title: Text(
-            FormattingHelper.formatToTimeString(alert.hour, alert.minute),
-            style: Theme.of(context).textTheme.subtitle,
-          ),
-          trailing: Switch(
-            value: alert.active,
-            activeColor: Theme.of(context).primaryColor,
-            onChanged: (value) {
-              setState(() {
-                alert.active = value;
-              });
+          child: ListTile(
+            title: Text(
+              FormattingHelper.formatToTimeString(alert.hour, alert.minute),
+              style: Theme.of(context).textTheme.title,
+            ),
+            trailing: Switch(
+              value: alert.active,
+              activeColor: Theme.of(context).primaryColor,
+              onChanged: (value) {
+                setState(() {
+                  alert.active = value;
+                });
+                model.selectAlert(widget.alertIndex);
+                model.updateAlert(alert);
+              },
+            ),
+            leading: Icon(Icons.hourglass_empty),
+            subtitle: Text(
+              _getDaysAsString(alert),
+              style: Theme.of(context).textTheme.subtitle,
+            ),
+            onTap: () {
               model.selectAlert(widget.alertIndex);
-              model.updateAlert(alert);
+              Navigator.of(context)
+                  .push(MaterialPageRoute(builder: (BuildContext context) {
+                return AlertScreen();
+              }));
+            },
+            onLongPress: () {
+              model.selectAlert(widget.alertIndex);
+              _showOptionsDialog(alert, model.deleteAlert);
             },
           ),
-          leading: Icon(Icons.hourglass_empty),
-          subtitle: Text(
-            _getDaysAsString(alert),
-            style: Theme.of(context).textTheme.subtitle,
-          ),
-          onTap: () {
-            model.selectAlert(widget.alertIndex);
-            Navigator.of(context)
-                .push(MaterialPageRoute(builder: (BuildContext context) {
-              return AlertScreen();
-            }));
-          },
-          onLongPress: () {
-            model.selectAlert(widget.alertIndex);
-            _showOptionsDialog(alert, model.deleteAlert);
-          },
-        ));
+        );
       },
     );
   }

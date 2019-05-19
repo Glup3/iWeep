@@ -17,7 +17,7 @@ class MyBottomNavigationBar extends StatelessWidget {
           icon: Icon(Icons.access_alarm),
           title: Text(
             allTranslations.text('tab_alarm'),
-            style: Theme.of(context).textTheme.body1,
+            style: Theme.of(context).textTheme.body2,
           ),
           backgroundColor: Theme.of(context).primaryColor,
         ),
@@ -25,7 +25,7 @@ class MyBottomNavigationBar extends StatelessWidget {
           icon: Icon(Icons.show_chart),
           title: Text(
             allTranslations.text('tab_graph'),
-            style: Theme.of(context).textTheme.body1,
+            style: Theme.of(context).textTheme.body2,
           ),
           backgroundColor: Theme.of(context).primaryColor,
         ),
@@ -33,7 +33,7 @@ class MyBottomNavigationBar extends StatelessWidget {
           icon: Icon(Icons.settings),
           title: Text(
             allTranslations.text('tab_settings'),
-            style: Theme.of(context).textTheme.body1,
+            style: Theme.of(context).textTheme.body2,
           ),
           backgroundColor: Theme.of(context).primaryColor,
         ),
