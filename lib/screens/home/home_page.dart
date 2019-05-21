@@ -132,17 +132,26 @@ class _HomePageState extends State<HomePage> {
         barrierDismissible: false,
         builder: (BuildContext context) {
           return AlertDialog(
-            title: Text('Alert is ringing!'),
+            title: Text(
+              'Alert is ringing!',
+              style: Theme.of(context).textTheme.body1,
+            ),
             content: SingleChildScrollView(
               child: ListBody(
                 children: <Widget>[
-                  Text('It\'s time to wake up!'),
+                  Text(
+                    'It\'s time to wake up!',
+                    style: Theme.of(context).textTheme.body1,
+                  ),
                 ],
               ),
             ),
             actions: <Widget>[
               FlatButton(
-                child: Text('Deactivate'),
+                child: Text(
+                  'Deactivate',
+                  style: Theme.of(context).textTheme.body1,
+                ),
                 onPressed: () {
                   Navigator.of(context).pop();
                 },

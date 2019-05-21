@@ -24,6 +24,7 @@ class MyApp extends StatelessWidget {
           ScopedModel<AlertsModel>(
             model: AlertsModel(),
             child: MaterialApp(
+              debugShowCheckedModeBanner: false,
               title: 'iWeep',
               theme: theme,
               home: HomePage(),

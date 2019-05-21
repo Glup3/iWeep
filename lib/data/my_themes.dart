@@ -56,16 +56,24 @@ class MyThemes {
     ),
     ThemeData(
       accentColor: Colors.white,
-      primaryColor: Colors.purple[750],
+      primaryColor: Colors.black,
       primaryColorDark: Colors.purple[750],
       primaryColorLight: Colors.purple[750],
-      canvasColor: Colors.black,
-      textTheme: TextTheme(
-        body1: TextStyle(color: Colors.white),
-        body2: TextStyle(color: Colors.black),
-        subtitle: TextStyle(color: Colors.grey[350])
+      canvasColor: Colors.black87,
+      primaryIconTheme: IconThemeData(
+        color: Colors.white
       ),
-      cardColor: Colors.grey[850],
+      iconTheme: IconThemeData(
+        color: Colors.white,
+      ),
+      textTheme: TextTheme(
+        title: TextStyle(color: Colors.white),
+        body1: TextStyle(color: Colors.black),
+        body2: TextStyle(color: Colors.white),
+        subtitle: TextStyle(color: Colors.white),
+        headline: TextStyle(color: Colors.white),
+      ),
+      cardColor: Colors.grey[800],
     )
   ];
 }

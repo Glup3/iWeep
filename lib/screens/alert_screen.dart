@@ -55,7 +55,7 @@ class _AlertScreenState extends State<AlertScreen> {
           appBar: AppBar(
             title: Text(
               appBarTitle,
-              style: Theme.of(context).textTheme.body2,
+              style: Theme.of(context).textTheme.title,
             ),
           ),
           body: pageContent,
@@ -140,9 +140,15 @@ class _AlertScreenState extends State<AlertScreen> {
   Widget _buildCardDayPicker(Alert alert) {
     return Card(
       child: ListTile(
-        leading: Text('Wiederholen'),
+        leading: Text(
+          'Wiederholen',
+          style: Theme.of(context).textTheme.body2,
+        ),
         onTap: () => _showDayPickerDialog(alert),
-        trailing: Text(_getDaysAsString(alert)),
+        trailing: Text(
+          _getDaysAsString(alert),
+          style: Theme.of(context).textTheme.body2,  
+        ),
       ),
     );
   }
@@ -248,23 +254,33 @@ class _CheckboxDialogState extends State<CheckboxDialog> {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: Text('Wochentage auswählen'),
+      title: Text(
+        'Wochentage auswählen',
+        style: Theme.of(context).textTheme.body1,
+      ),
       content: Column(
         children: List.generate(widget.activatedDays.length, (int index) {
           return CheckboxListTile(
-            title: Text(FormattingHelper.getDayAsStringFromNumber(index+1)),
+            title: Text(
+              FormattingHelper.getDayAsStringFromNumber(index+1),
+              style: Theme.of(context).textTheme.body1,
+            ),
             value: widget.activatedDays[index],
             onChanged: (value) {
               setState(() {
                 widget.activatedDays[index] = !widget.activatedDays[index];
               });
             },
+            activeColor: Theme.of(context).primaryColor,
           );
         }),
       ),
       actions: <Widget>[
         FlatButton(
-          child: Text('Okay'),
+          child: Text(
+            'Okay',
+            style: Theme.of(context).textTheme.body1,
+          ),
           onPressed: () => Navigator.of(context).pop(),
         )
       ],

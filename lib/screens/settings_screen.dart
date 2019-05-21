@@ -46,6 +46,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
           return SimpleDialog(
             title: Text(
               'Select Theme',
+              style: Theme.of(context).textTheme.body1,
             ),
             children: <Widget>[
               SimpleDialogOption(

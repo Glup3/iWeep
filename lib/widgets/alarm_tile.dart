@@ -30,7 +30,7 @@ class _AlarmTileState extends State<AlarmTile> {
             ),
             trailing: Switch(
               value: alert.active,
-              activeColor: Theme.of(context).primaryColor,
+              activeColor: Theme.of(context).accentColor,
               onChanged: (value) {
                 setState(() {
                   alert.active = value;
