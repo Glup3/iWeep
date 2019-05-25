@@ -18,6 +18,7 @@ class MyThemes {
         subtitle: TextStyle(color: Colors.black),
         headline: TextStyle(color: Colors.white),
       ),
+      cardColor: Colors.white,
     ),
     ThemeData(
       accentColor: Colors.cyan,

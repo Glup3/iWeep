@@ -6,6 +6,14 @@ import 'package:iweep/model_scoped/alerts.dart';
 import 'package:iweep/model/alert.dart';
 import 'package:iweep/util/formatting_helper.dart';
 import 'package:iweep/alert/my_alarm.dart';
+import 'package:iweep/localization/GlobalTranslations.dart';
+
+enum WakeUpMethod {
+  Standard,
+  Math,
+  Word,
+  Shake,
+}
 
 class AlertScreen extends StatefulWidget {
   @override
@@ -13,6 +21,7 @@ class AlertScreen extends StatefulWidget {
 }
 
 class _AlertScreenState extends State<AlertScreen> {
+  String _wakeUpMethod = '';
   int _hour;
   int _minute;
   List<bool> _activatedDays;
@@ -25,10 +34,10 @@ class _AlertScreenState extends State<AlertScreen> {
             _buildPageContent(context, model.selectedAlert);
         Alert alert = model.selectedAlert;
 
-        String appBarTitle = "Add Alert";
+        String appBarTitle = allTranslations.text('add_alert');
 
         if (alert != null) {
-          appBarTitle = "Edit Alert";
+          appBarTitle = allTranslations.text('edit_alert');
           _activatedDays = [
             alert.days.monday,
             alert.days.tuesday,
@@ -84,7 +93,7 @@ class _AlertScreenState extends State<AlertScreen> {
       builder: (BuildContext context, Widget child, AlertsModel model) {
         return FlatButton(
           child: Text(
-            'Okay',
+            allTranslations.text('okay'),
             style: Theme.of(context).textTheme.body2,
           ),
           onPressed: () async {
@@ -94,7 +103,7 @@ class _AlertScreenState extends State<AlertScreen> {
                   : model.selectedAlert.active,
               hour: _hour,
               minute: _minute,
-              method: "normal",
+              method: _wakeUpMethod,
               days: Days(
                 monday: _activatedDays[0],
                 tuesday: _activatedDays[1],
@@ -132,6 +141,7 @@ class _AlertScreenState extends State<AlertScreen> {
         children: <Widget>[
           _buildCardTimePicker(alert),
           _buildCardDayPicker(alert),
+          _buildCardMethodPicker()
         ],
       ),
     );
@@ -141,19 +151,19 @@ class _AlertScreenState extends State<AlertScreen> {
     return Card(
       child: ListTile(
         leading: Text(
-          'Wiederholen',
-          style: Theme.of(context).textTheme.body2,
+          allTranslations.text('repeat'),
+          style: Theme.of(context).textTheme.body1, // white theme, black font
         ),
-        onTap: () => _showDayPickerDialog(alert),
+        onTap: () => _showDayPickerDialog(),
         trailing: Text(
           _getDaysAsString(alert),
-          style: Theme.of(context).textTheme.body2,  
+          style: Theme.of(context).textTheme.body1, // white theme, black font
         ),
       ),
     );
   }
 
-  Future<void> _showDayPickerDialog(Alert alert) async {
+  Future<void> _showDayPickerDialog() async {
     return showDialog<void>(
       context: context,
       barrierDismissible: false,
@@ -181,7 +191,7 @@ class _AlertScreenState extends State<AlertScreen> {
   Widget _buildCancelButton() {
     return FlatButton(
       child: Text(
-        'Abbrechen',
+        allTranslations.text('cancel'),
         style: Theme.of(context).textTheme.body2,
       ),
       onPressed: () {
@@ -239,6 +249,86 @@ class _AlertScreenState extends State<AlertScreen> {
     }
     return days;
   }
+
+  Future<void> _showWakeUpMethodDialog() async {
+    String method;
+
+    switch (await showDialog<WakeUpMethod> (
+      context: context,
+      builder: (BuildContext context) {
+        return SimpleDialog(
+          title: Text(allTranslations.text('choose_wake_up_method')),
+          children: <Widget>[
+            SimpleDialogOption(
+              child: Text(allTranslations.text('method_standard')),
+              onPressed: () {
+                Navigator.pop(context, WakeUpMethod.Standard);
+              },
+            ),
+            SimpleDialogOption(
+              child: Text(allTranslations.text('method_math')),
+              onPressed: () {
+                Navigator.pop(context, WakeUpMethod.Math);
+              },
+            ),
+            SimpleDialogOption(
+              child: Text(allTranslations.text('method_word')),
+              onPressed: () {
+                Navigator.pop(context, WakeUpMethod.Word);
+              },
+            ),
+            SimpleDialogOption(
+              child: Text(allTranslations.text('method_shake')),
+              onPressed: () {
+                Navigator.pop(context, WakeUpMethod.Shake);
+              },
+            ),
+          ],
+        );
+      }
+    )) {
+      case WakeUpMethod.Standard:
+        method = "normal";
+        break;
+        
+      case WakeUpMethod.Math:
+        method = "math";
+        break;
+
+      case WakeUpMethod.Word:
+        method = "word";
+        break;
+
+      case WakeUpMethod.Shake:
+        method = "shake";
+        break;
+
+      default:
+        method = "normal";
+        break;
+    }
+
+    setState(() {
+      _wakeUpMethod = method;
+    });
+  }
+
+  Widget _buildCardMethodPicker() {
+    return Card(
+      child: ListTile(
+        leading: Text(
+          allTranslations.text('wake_up_method'),
+          style: Theme.of(context).textTheme.body1, // white theme, black font
+        ),
+        onTap: () => _showWakeUpMethodDialog(),
+        trailing: Text(
+          _wakeUpMethod,
+          style: Theme.of(context).textTheme.body1, // white theme, black font
+        ),
+      ),
+    );
+  }
+
 }
 
 class CheckboxDialog extends StatefulWidget {
@@ -255,7 +345,7 @@ class _CheckboxDialogState extends State<CheckboxDialog> {
   Widget build(BuildContext context) {
     return AlertDialog(
       title: Text(
-        'Wochentage auswählen',
+        allTranslations.text('choose_weekdays'),
         style: Theme.of(context).textTheme.body1,
       ),
       content: Column(
@@ -278,7 +368,7 @@ class _CheckboxDialogState extends State<CheckboxDialog> {
       actions: <Widget>[
         FlatButton(
           child: Text(
-            'Okay',
+            allTranslations.text('okay'),
             style: Theme.of(context).textTheme.body1,
           ),
           onPressed: () => Navigator.of(context).pop(),

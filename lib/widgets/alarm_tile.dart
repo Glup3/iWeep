@@ -6,6 +6,7 @@ import 'package:iweep/model/alert.dart';
 import 'package:iweep/util/formatting_helper.dart';
 import 'package:iweep/model_scoped/alerts.dart';
 import 'package:iweep/screens/alert_screen.dart';
+import 'package:iweep/localization/GlobalTranslations.dart';
 
 class AlarmTile extends StatefulWidget {
   final int alertIndex;
@@ -66,17 +67,17 @@ class _AlarmTileState extends State<AlarmTile> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('Warnung'),
-          content: Text('Wollen Sie diesen Alarm wirklich löschen?'),
+          title: Text(allTranslations.text('warning')),
+          content: Text(allTranslations.text('confirm_delete_alert'),),
           actions: <Widget>[
             FlatButton(
-              child: Text('Abbrechen'),
+              child: Text(allTranslations.text('cancel'),),
               onPressed: () {
                 Navigator.of(context).pop();
               },
             ),
             FlatButton(
-              child: Text('Bestätigen'),
+              child: Text(allTranslations.text('confirm'),),
               onPressed: () {
                 deleteAlert();
                 Navigator.of(context).pop();

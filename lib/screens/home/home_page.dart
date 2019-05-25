@@ -93,7 +93,7 @@ class _HomePageState extends State<HomePage> {
             future: SharedPreferencesHelper.getAlerts(),
             builder: (context, snapshot) {
               if (snapshot.hasError) {
-                return Center(child: Text('ERROR LOADING DATA'));
+                return Center(child: Text(allTranslations.text('error_loading_alerts'),));
               }
 
               if (snapshot.hasData && !_initialLoad) {
@@ -133,14 +133,14 @@ class _HomePageState extends State<HomePage> {
         builder: (BuildContext context) {
           return AlertDialog(
             title: Text(
-              'Alert is ringing!',
+              allTranslations.text('alert_is_ringing'),
               style: Theme.of(context).textTheme.body1,
             ),
             content: SingleChildScrollView(
               child: ListBody(
                 children: <Widget>[
                   Text(
-                    'It\'s time to wake up!',
+                    allTranslations.text('wake_up_message'),
                     style: Theme.of(context).textTheme.body1,
                   ),
                 ],
@@ -149,7 +149,7 @@ class _HomePageState extends State<HomePage> {
             actions: <Widget>[
               FlatButton(
                 child: Text(
-                  'Deactivate',
+                  allTranslations.text('deactivate'),
                   style: Theme.of(context).textTheme.body1,
                 ),
                 onPressed: () {
