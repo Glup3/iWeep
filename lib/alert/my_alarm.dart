@@ -16,7 +16,11 @@ class MyAlarm {
   static void playTheAlarmUntilDateTime(Alert alert, int id) async {
     DateTime now = DateTime.now();
     DateTime alertTime = DateTime(now.year, now.month, now.day, alert.hour, alert.minute, 0);
-        
+
+    if (alertTime.isBefore(now)) {
+      alertTime = alertTime.add(Duration(days: 1));
+    }
+    
     Duration duration = alertTime.difference(now);
 
     await AndroidAlarmManager.oneShot(duration, id, playAlarmAsLoop);
